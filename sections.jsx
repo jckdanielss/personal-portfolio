@@ -208,7 +208,7 @@ function About() {
             <div className="row"><span className="k">name</span><span className="v">"Marc Daniel U. Dela Cruz"</span></div>
             <div className="row"><span className="k">role</span><span className="v">"full-stack dev"</span></div>
             <div className="row"><span className="k">edu</span><span className="v">"BSIT · 4th yr"</span></div>
-            <div className="row"><span className="k">stack</span><span className="v">[vue, laravel, php, mysql]</span></div>
+            <div className="row"><span className="k">stack</span><span className="v">[vue, react, laravel, php, ts, postgres]</span></div>
             <div className="row"><span className="k">status</span>
               <span className="v"><span className="pill">● open</span>freelance + collabs</span>
             </div>
@@ -235,6 +235,12 @@ function Stack() {
         { name: "Vite",    cat: "build",   icon: "vite"     },
         { name: "Tailwind",cat: "styling", icon: "tailwind" },
         { name: "Figma",   cat: "design",  icon: "figma"    },
+        { name: "React",      cat: "ui",       icon: "react"      },
+        { name: "TypeScript", cat: "lang",     icon: "ts"         },
+        { name: "JavaScript", cat: "lang",     icon: "javascript" },
+        { name: "Bootstrap",  cat: "styling",  icon: "bootstrap"  },
+        { name: "shadcn/ui",  cat: "components", icon: "shadcnui" },
+        { name: "Vue Router", cat: "routing",  icon: "vuerouter"  },
       ],
     },
     {
@@ -248,6 +254,13 @@ function Stack() {
         { name: "PHP",     cat: "lang",      icon: "php"     },
         { name: "MySQL",   cat: "database",  icon: "mysql"   },
         { name: "Pusher",  cat: "realtime",  icon: "pusher"  },
+        { name: "PostgreSQL",        cat: "database", icon: "postgres" },
+        { name: "Supabase",          cat: "backend",  icon: "supabase" },
+        { name: "Firebase",          cat: "backend",  icon: "firebase" },
+        { name: "MongoDB",           cat: "database", icon: "mongodb"  },
+        { name: "API Design",        cat: "api",      icon: "api"      },
+        { name: "Spatie Permissions",cat: "auth",     icon: "spatie"   },
+        { name: "Role-Based Access", cat: "auth",     icon: "rbac"     },
       ],
     },
     {
@@ -261,9 +274,16 @@ function Stack() {
         { name: "Capacitor", cat: "mobile", icon: "capacitor" },
         { name: "Leaflet",   cat: "maps",   icon: "leaflet"   },
         { name: "Git",       cat: "vcs",    icon: "git"       },
+        { name: "GitHub",        cat: "repo",       icon: "github"   },
+        { name: "Vercel",        cat: "deploy",     icon: "vercel"   },
+        { name: "Blender",       cat: "3d",         icon: "blender"  },
+        { name: "VS Code",       cat: "editor",     icon: "vscode"   },
+        { name: "Design Systems",cat: "design",     icon: "designsystems" },
+        { name: "CI/CD",         cat: "automation", icon: "cicd"     },
       ],
     },
   ];
+  const totalItems = groups.reduce((sum, group) => sum + group.items.length, 0);
 
   return (
     <section id="stack">
@@ -276,7 +296,7 @@ function Stack() {
             </h2>
           </div>
           <div className="right">
-            12 things I trust,<br/>
+            {totalItems} things I trust,<br/>
             split across 3 layers.
           </div>
         </Reveal>
