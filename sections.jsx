@@ -38,8 +38,6 @@ function Nav({ theme, toggleTheme }) {
     <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="wrap nav-inner">
         <a href="#top" className="logo" data-cursor-hover>
-          <span className="logo-mark">∗</span>
-          <span>daniel.dev</span>
         </a>
         <div className="nav-links">
           <a href="#about"><span className="num">01</span>about</a>
@@ -106,50 +104,58 @@ function Hero() {
       <div className="hero-blob b2" ref={b2}></div>
 
       <div className="wrap hero-content">
-        <Reveal>
-          <div className="hello-tag" data-cursor-hover>
-            <span className="dot-pulse"></span>
-            available for freelance · Q3 2026
+        <div className="hero-layout">
+          <div className="hero-copy">
+            <Reveal>
+              <div className="hello-tag" data-cursor-hover>
+                <span className="dot-pulse"></span>
+                available for freelance · Q3 2026
+              </div>
+            </Reveal>
+
+            <Reveal delay={100}>
+              <h1>
+                <span className="line">hey, i&rsquo;m <span className="grad">Marc Daniel</span>—</span>
+                <span className="line">
+                  a <span className="role-rotator" style={{ fontSize: ".7em" }}>
+                    <span className="role-word">{typed}</span>
+                    <span className="caret"></span>
+                  </span>
+                </span>
+                <span className="line">who actually <span className="grad-2">ships</span>.</span>
+              </h1>
+            </Reveal>
+
+            <div className="hero-meta">
+              <Reveal delay={200} className="lead">
+                <p style={{ margin: 0 }}>
+                  4th-year BSIT student building full-stack systems through thesis projects, client work, and a lot of late-night debugging. i like clean UX, practical features, and shipping things people can actually use.
+                </p>
+              </Reveal>
+              <Reveal delay={280} className="meta-block">
+                <div className="k">◉ based in</div>
+                <div className="v">Cavite, Philippines<br/>UTC+8</div>
+              </Reveal>
+              <Reveal delay={340} className="meta-block">
+                <div className="k">◉ currently</div>
+                <div className="v">finishing thesis<br/>+ freelance builds</div>
+              </Reveal>
+            </div>
+
+            <Reveal delay={400} className="hero-cta">
+              <a className="btn primary" href="#work" data-cursor-hover>
+                see selected work <Icon.arrow className="arrow" width={14} height={14} />
+              </a>
+              <a className="btn ghost" href="#contact" data-cursor-hover>
+                <Icon.mail width={14} height={14} /> get in touch
+              </a>
+            </Reveal>
           </div>
-        </Reveal>
 
-        <Reveal delay={100}>
-          <h1>
-            <span className="line">hey, i&rsquo;m <span className="grad">Marc Daniel</span>—</span>
-            <span className="line">
-              a <span className="role-rotator" style={{ fontSize: ".7em" }}>
-                <span className="role-word">{typed}</span>
-                <span className="caret"></span>
-              </span>
-            </span>
-            <span className="line">who actually <span className="grad-2">ships</span>.</span>
-          </h1>
-        </Reveal>
-
-        <div className="hero-meta">
-          <Reveal delay={200} className="lead">
-            <p style={{ margin: 0 }}>
-              4th-year BSIT student building full-stack systems through thesis projects, client work, and a lot of late-night debugging. i like clean UX, practical features, and shipping things people can actually use.
-            </p>
-          </Reveal>
-          <Reveal delay={280} className="meta-block">
-            <div className="k">◉ based in</div>
-            <div className="v">Cavite, Philippines<br/>UTC+8</div>
-          </Reveal>
-          <Reveal delay={340} className="meta-block">
-            <div className="k">◉ currently</div>
-            <div className="v">finishing thesis<br/>+ freelance builds</div>
+          <Reveal delay={220} className="hero-photo-wrap">
+            <img src="pfp.jpg" alt="Marc Daniel portrait" className="hero-photo" data-cursor-hover />
           </Reveal>
         </div>
-
-        <Reveal delay={400} className="hero-cta">
-          <a className="btn primary" href="#work" data-cursor-hover>
-            see selected work <Icon.arrow className="arrow" width={14} height={14} />
-          </a>
-          <a className="btn ghost" href="#contact" data-cursor-hover>
-            <Icon.mail width={14} height={14} /> get in touch
-          </a>
-        </Reveal>
       </div>
     </header>
   );
@@ -515,7 +521,7 @@ function Contact() {
             <a href={`tel:+63${phone.slice(1)}`} data-cursor-hover>{phone}</a>
             <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer" data-cursor-hover><Icon.github width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />github</a>
             <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
-          </div>
+``          </div>
         </Reveal>
 
         <footer className="foot">
