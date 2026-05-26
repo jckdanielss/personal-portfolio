@@ -38,6 +38,13 @@ function Nav({ theme, toggleTheme }) {
     <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
       <div className="wrap nav-inner">
         <a href="#top" className="logo" data-cursor-hover>
+          <span className="logo-mark">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 2h5.5C11 2 13 4 13 7s-2 5-4.5 5H3V2z" fill="white"/>
+              <path d="M9.5 2L13 7l-3.5 5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </span>
+          <span>marc daniel</span>
         </a>
         <div className="nav-links">
           <a href="#about"><span className="num">01</span>about</a>
@@ -216,19 +223,46 @@ function About() {
 
 /* ─── Stack ─── */
 function Stack() {
-  const items = [
-    { name: "Vue 3",      cat: "ui",       icon: "vue",       grad: "1" },
-    { name: "Vite",       cat: "build",    icon: "vite",      grad: "1" },
-    { name: "Tailwind",   cat: "styling",  icon: "tailwind",  grad: "1" },
-    { name: "Figma",      cat: "design",   icon: "figma",     grad: "1" },
-    { name: "Laravel",    cat: "framework",icon: "laravel",   grad: "2" },
-    { name: "PHP",        cat: "lang",     icon: "php",       grad: "2" },
-    { name: "MySQL",      cat: "database", icon: "mysql",     grad: "2" },
-    { name: "Pusher",     cat: "realtime", icon: "pusher",    grad: "2" },
-    { name: "Three.js",   cat: "3d",       icon: "three",     grad: "3" },
-    { name: "Capacitor",  cat: "mobile",   icon: "capacitor", grad: "3" },
-    { name: "Leaflet",    cat: "maps",     icon: "leaflet",   grad: "3" },
-    { name: "Git",        cat: "vcs",      icon: "git",       grad: "3" },
+  const groups = [
+    {
+      id: "frontend",
+      label: "Frontend",
+      tag: "client side",
+      hint: "what users actually see",
+      grad: "1",
+      items: [
+        { name: "Vue 3",   cat: "ui",      icon: "vue"      },
+        { name: "Vite",    cat: "build",   icon: "vite"     },
+        { name: "Tailwind",cat: "styling", icon: "tailwind" },
+        { name: "Figma",   cat: "design",  icon: "figma"    },
+      ],
+    },
+    {
+      id: "backend",
+      label: "Backend",
+      tag: "server side",
+      hint: "framework, lang & db",
+      grad: "2",
+      items: [
+        { name: "Laravel", cat: "framework", icon: "laravel" },
+        { name: "PHP",     cat: "lang",      icon: "php"     },
+        { name: "MySQL",   cat: "database",  icon: "mysql"   },
+        { name: "Pusher",  cat: "realtime",  icon: "pusher"  },
+      ],
+    },
+    {
+      id: "tools",
+      label: "Tools & Services",
+      tag: "everything else",
+      hint: "3d · mobile · maps · vcs",
+      grad: "3",
+      items: [
+        { name: "Three.js",  cat: "3d",     icon: "three"     },
+        { name: "Capacitor", cat: "mobile", icon: "capacitor" },
+        { name: "Leaflet",   cat: "maps",   icon: "leaflet"   },
+        { name: "Git",       cat: "vcs",    icon: "git"       },
+      ],
+    },
   ];
 
   return (
@@ -242,23 +276,39 @@ function Stack() {
             </h2>
           </div>
           <div className="right">
-            12 things I trust.<br/>
-            hover to peek.
+            12 things I trust,<br/>
+            split across 3 layers.
           </div>
         </Reveal>
 
-        <Reveal>
-          <div className="stack-grid">
-            {items.map((it, i) => (
-              <div className="stack-chip" data-grad={it.grad} data-cursor-hover key={i}
-                style={{ transitionDelay: `${i * 20}ms` }}>
-                <div className="icon"><TechIcon name={it.icon} /></div>
-                <div className="name">{it.name}</div>
-                <div className="cat">{it.cat}</div>
+        <div className="stack-groups">
+          {groups.map((g, gi) => (
+            <Reveal key={g.id} delay={gi * 80} className="stack-group" data-grad={g.grad}>
+              <header className="stack-group-head">
+                <div className="stack-group-label">
+                  <span className="stack-group-dot" />
+                  <span className="stack-group-name">{g.label}</span>
+                  <span className="stack-group-tag">{g.tag}</span>
+                </div>
+                <div className="stack-group-hint">{g.hint}</div>
+                <div className="stack-group-count">
+                  <span>{String(g.items.length).padStart(2, "0")}</span>
+                  <span className="stack-group-count-label">tools</span>
+                </div>
+              </header>
+              <div className="stack-grid">
+                {g.items.map((it, i) => (
+                  <div className="stack-chip" data-grad={g.grad} data-cursor-hover key={it.name}
+                    style={{ transitionDelay: `${i * 20}ms` }}>
+                    <div className="icon"><TechIcon name={it.icon} /></div>
+                    <div className="name">{it.name}</div>
+                    <div className="cat">{it.cat}</div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </Reveal>
+            </Reveal>
+          ))}
+        </div>
       </div>
     </section>
   );
