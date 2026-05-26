@@ -396,6 +396,7 @@ function Projects() {
       num: "01",
       title: "Cavite Moto-Tech Hub",
       desc: "Full-stack ERP for motorcycle shops — 7 user roles, complete business lifecycle from booking to finance &amp; staff management, 3D CVT customizer, and a companion Android app",
+      stack: "Vue 3 · Laravel · PHP · MySQL · Tailwind · shadcn/ui · Three.js · Capacitor",
       year: "2025 — now",
       href: "https://cavitemototech.ogm1.com",
       art: "moto",
@@ -404,6 +405,7 @@ function Projects() {
       num: "02",
       title: "D.C. Transport Services",
       desc: "Van-rental booking platform — OTP-verified guest bookings, interactive map pinning with auto-fill, route-aware pricing across 27 distance bands, and admin quote + calendar dashboard",
+      stack: "Vue 3 · Laravel · PHP · MySQL · Leaflet",
       year: "2026",
       href: "https://dctransport.ogm1.com",
       art: "van",
@@ -412,6 +414,7 @@ function Projects() {
       num: "03",
       title: "Den · VA Portfolio",
       desc: "Sister&rsquo;s virtual-assistant portfolio site — design, build, and deploy",
+      stack: "HTML · CSS · JavaScript · Vercel · Figma",
       year: "2026",
       href: "https://den-portfolio-plum.vercel.app",
       art: "portfolio",
@@ -466,7 +469,10 @@ function Projects() {
                 >
                   <span className="num">{p.num}</span>
                   <span className="title">{p.title}</span>
-                  <span className="desc" dangerouslySetInnerHTML={{ __html: p.desc }} />
+                  <div className="meta">
+                    <span className="desc" dangerouslySetInnerHTML={{ __html: p.desc }} />
+                    <span className="stack-used">{p.stack}</span>
+                  </div>
                   <span className="year">{p.year}</span>
                   <span className="go">
                     <Icon.arrow width={14} height={14} />
