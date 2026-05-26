@@ -129,7 +129,7 @@ function Hero() {
         <div className="hero-meta">
           <Reveal delay={200} className="lead">
             <p style={{ margin: 0 }}>
-              4th-year IT student who accidentally became a dev by fixing my family&rsquo;s spreadsheet chaos. now i build full-stack platforms for actual businesses. love dark mode, hate scope creep.
+              4th-year BSIT student building full-stack systems through thesis projects, client work, and a lot of late-night debugging. i like clean UX, practical features, and shipping things people can actually use.
             </p>
           </Reveal>
           <Reveal delay={280} className="meta-block">
@@ -177,7 +177,7 @@ function About() {
         <div className="about-grid">
           <Reveal className="about-text" delay={100}>
             <p>
-              I got into coding because a spreadsheet made my mom want to quit. Our family&rsquo;s van-rental business was running on Excel with conditional formatting held together by prayers — so I turned it into a real booking system. Then a motorcycle shop owner said &ldquo;can you do something like that for us?&rdquo; and now I&rsquo;m shipping ERPs with <span className="highlight">Three.js configurators</span>. Textbook slippery slope.
+              I got into development by building and iterating projects in school, then leveling them up into real full-stack apps. Most of my growth came from thesis pressure, team deadlines, and rebuilding features until they were reliable enough for actual users.
             </p>
             <p>
               I work the whole stack — schema design, API wiring, UI, and deploying it somewhere with a real domain that <strong>actual customers use</strong>. I care about dashboards that don&rsquo;t suck, pricing logic that doesn&rsquo;t lie, and the invisible 20% of work that makes the other 80% feel right.
@@ -485,7 +485,8 @@ function Journey() {
 /* ─── Contact ─── */
 function Contact() {
   const [copied, setCopied] = useState(false);
-  const email = "hello@ogm1.com";
+  const email = "marcdanieldelacruz599@gmail.com";
+  const phone = "09602020493";
   const copy = () => {
     navigator.clipboard?.writeText(email);
     setCopied(true);
@@ -510,10 +511,10 @@ function Contact() {
             {!copied && <Icon.copy width={14} height={14} />}
           </button>
           <div className="socials">
+            <a href="https://www.facebook.com/daniel.502270/" target="_blank" rel="noopener noreferrer" data-cursor-hover>facebook</a>
+            <a href={`tel:+63${phone.slice(1)}`} data-cursor-hover>{phone}</a>
             <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer" data-cursor-hover><Icon.github width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />github</a>
             <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
-            <a href="https://cavitemototech.ogm1.com" target="_blank" rel="noopener noreferrer" data-cursor-hover>cavitemototech ↗</a>
-            <a href="https://dctransport.ogm1.com" target="_blank" rel="noopener noreferrer" data-cursor-hover>dctransport ↗</a>
           </div>
         </Reveal>
 
