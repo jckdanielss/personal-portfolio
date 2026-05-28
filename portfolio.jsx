@@ -150,6 +150,7 @@ function App() {
       <Hero />
       <About />
       <Stack />
+      <TechSkills />
       <Projects />
       <Journey />
       <Contact />

@@ -49,9 +49,10 @@ function Nav({ theme, toggleTheme }) {
         <div className="nav-links">
           <a href="#about"><span className="num">01</span>about</a>
           <a href="#stack"><span className="num">02</span>stack</a>
-          <a href="#work"><span className="num">03</span>work</a>
-          <a href="#journey"><span className="num">04</span>journey</a>
-          <a href="#contact"><span className="num">05</span>contact</a>
+          <a href="#skills"><span className="num">03</span>skills</a>
+          <a href="#work"><span className="num">04</span>work</a>
+          <a href="#journey"><span className="num">05</span>journey</a>
+          <a href="#contact"><span className="num">06</span>contact</a>
         </div>
         <button className="theme-btn" data-cursor-hover onClick={toggleTheme} aria-label="toggle theme">
           {theme === "dark" ? <Icon.sun /> : <Icon.moon />}
@@ -181,22 +182,22 @@ function About() {
             </h2>
           </div>
           <div className="right">
-            mostly self-taught<br/>
-            keyboard-driven<br/>
-            coffee-positive
+            ships full products<br/>
+            not just prototypes<br/>
+            available Q3 2026
           </div>
         </Reveal>
 
         <div className="about-grid">
           <Reveal className="about-text" delay={100}>
             <p>
-              I got into development by building and iterating projects in school, then leveling them up into real full-stack apps. Most of my growth came from thesis pressure, team deadlines, and rebuilding features until they were reliable enough for actual users.
+              I taught myself how to build things properly by breaking them first. School gave me the foundation  but the real growth came from thesis deadlines, actual clients, and the kind of pressure that makes you rewrite a feature at 2am because it <em>has</em> to work by morning.
             </p>
             <p>
-              I work the whole stack — schema design, API wiring, UI, and deploying it somewhere with a real domain that <strong>actual customers use</strong>. I care about dashboards that don&rsquo;t suck, pricing logic that doesn&rsquo;t lie, and the invisible 20% of work that makes the other 80% feel right.
+              If you work with me, you get someone who handles the full picture. I&rsquo;ve built an <strong>Integrated Management Platform for Motorcyle Shops that is scalable</strong>, a <strong>booking platform for a transport business</strong>, and smaller sites in between  each one shipped, live, and used by real people. I don&rsquo;t hand things off halfway. I do the schema, the API, the UI, and the deploy. The stuff clients notice without knowing why the button that feels right, the price that calculates correctly, the page that loads fast that&rsquo;s the part I care about most.
             </p>
             <p>
-              When I&rsquo;m not shipping: I&rsquo;m probably too deep in a game I&rsquo;ve already played 300 hours of, shuffling through playlists I&rsquo;ll never finish curating, or convincing myself that learning <span className="highlight">Blender</span> totally counts as work. BSIT 4th year. Based in Cavite. Runs on coffee and a questionable sleep schedule.
+              When I&rsquo;m not shipping: I&rsquo;m probably 300 hours deep into a game I&rsquo;ve already finished, shuffling through playlists I&rsquo;ll never stop curating, or convincing myself that learning <span className="highlight">Blender</span> totally counts as work. BSIT 4th year. Based in Cavite. Runs on coffee and a questionable sleep schedule.
             </p>
           </Reveal>
 
@@ -213,7 +214,7 @@ function About() {
               <span className="v"><span className="pill">● open</span>freelance + collabs</span>
             </div>
             <div className="row"><span className="k">vices</span><span className="v">"gaming, music, blender fails"</span></div>
-            <div className="comment">last updated 2 mins ago</div>
+            <div className="comment">// last updated · May 2026</div>
           </Reveal>
         </div>
       </div>
@@ -258,9 +259,6 @@ function Stack() {
         { name: "Supabase",          cat: "backend",  icon: "supabase" },
         { name: "Firebase",          cat: "backend",  icon: "firebase" },
         { name: "MongoDB",           cat: "database", icon: "mongodb"  },
-        { name: "API Design",        cat: "api",      icon: "api"      },
-        { name: "Spatie Permissions",cat: "auth",     icon: "spatie"   },
-        { name: "Role-Based Access", cat: "auth",     icon: "rbac"     },
       ],
     },
     {
@@ -277,9 +275,6 @@ function Stack() {
         { name: "GitHub",        cat: "repo",       icon: "github"   },
         { name: "Vercel",        cat: "deploy",     icon: "vercel"   },
         { name: "Blender",       cat: "3d",         icon: "blender"  },
-        { name: "VS Code",       cat: "editor",     icon: "vscode"   },
-        { name: "Design Systems",cat: "design",     icon: "designsystems" },
-        { name: "CI/CD",         cat: "automation", icon: "cicd"     },
       ],
     },
   ];
@@ -325,6 +320,116 @@ function Stack() {
                     <div className="cat">{it.cat}</div>
                   </div>
                 ))}
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─── Technical Skills ─── */
+function TechSkills() {
+  const skills = [
+    {
+      name: "Role-Based Access Control",
+      short: "RBAC",
+      desc: "Multi-role user systems with granular permission gates. Built with Spatie Permissions on Laravel — 7 roles in production.",
+      tags: ["Laravel", "Spatie", "middleware"],
+      usedIn: { label: "Moto-Tech Hub", href: "https://cavitemototech.ogm1.com" },
+    },
+    {
+      name: "REST API Design",
+      short: "APIs",
+      desc: "Resource-oriented endpoints, auth middleware, versioning, and consistent response structures consumed by web + mobile clients.",
+      tags: ["Laravel", "JSON", "Sanctum"],
+      usedIn: { label: "Moto-Tech Hub", href: "https://cavitemototech.ogm1.com" },
+    },
+    {
+      name: "Automated Email",
+      short: "mail",
+      desc: "Queued notifications, templated SMTP mail (quotations, OTP, confirmations) with Laravel Queues + Mail facades.",
+      tags: ["Laravel", "SMTP", "queues"],
+      usedIn: { label: "DC Transport", href: "https://dctransport.ogm1.com" },
+    },
+    {
+      name: "Real-time Events",
+      short: "live",
+      desc: "WebSocket broadcasting via Pusher for live dashboards, instant notifications, and collaborative UX.",
+      tags: ["Pusher", "Laravel Echo", "WebSockets"],
+      usedIn: { label: "Moto-Tech Hub", href: "https://cavitemototech.ogm1.com" },
+    },
+    {
+      name: "OTP & Auth Flows",
+      short: "auth",
+      desc: "Guest OTP verification via SMS/email, session management, Sanctum token auth for SPA + mobile.",
+      tags: ["Sanctum", "OTP", "sessions"],
+      usedIn: { label: "DC Transport", href: "https://dctransport.ogm1.com" },
+    },
+    {
+      name: "Database Design",
+      short: "schema",
+      desc: "Relational schema modeling, migrations, normalization, and query optimization across MySQL and PostgreSQL.",
+      tags: ["MySQL", "PostgreSQL", "migrations"],
+      usedIn: { label: "Moto-Tech Hub", href: "https://cavitemototech.ogm1.com" },
+    },
+    {
+      name: "Frontend Architecture",
+      short: "UI",
+      desc: "Component-driven UIs with Vue 3 + React. State management with Pinia, routing, reusable design systems, and Tailwind-based layouts that work on every screen size.",
+      tags: ["Vue 3", "React", "Pinia", "Tailwind"],
+      usedIn: { label: "DC Transport", href: "https://dctransport.ogm1.com" },
+    },
+    {
+      name: "Mobile App Deployment",
+      short: "iOS/Android",
+      desc: "Web apps packaged as native mobile apps via Capacitor — handles device APIs, build pipeline, and deployment to Android. The Moto-Tech companion app runs this way in production.",
+      tags: ["Capacitor", "Android", "Vue 3"],
+      usedIn: { label: "Moto-Tech Hub", href: "https://cavitemototech.ogm1.com" },
+    },
+    {
+      name: "3D on the Web",
+      short: "3D",
+      desc: "Three.js-powered interactive experiences inside the browser. Built a live CVT part configurator for a motorcycle ERP — users pick and preview real components in 3D.",
+      tags: ["Three.js", "WebGL", "Blender"],
+      usedIn: { label: "Moto-Tech Hub", href: "https://cavitemototech.ogm1.com" },
+    },
+  ];
+
+  return (
+    <section id="skills">
+      <div className="wrap">
+        <Reveal className="section-head">
+          <div>
+            <div className="section-num">03 — Skills</div>
+            <h2 className="section-title">
+              What I know how to <em>actually do</em>.
+            </h2>
+          </div>
+          <div className="right">
+            cross-cutting capabilities,<br/>
+            not just tool names.
+          </div>
+        </Reveal>
+
+        <div className="skills-grid">
+          {skills.map((s, i) => (
+            <Reveal key={s.name} delay={i * 60} className="skill-card" data-cursor-hover>
+              <div className="skill-card-head">
+                <span className="skill-short">{s.short}</span>
+                <span className="skill-name">{s.name}</span>
+              </div>
+              <p className="skill-desc">{s.desc}</p>
+              <div className="skill-footer">
+                <div className="skill-tags">
+                  {s.tags.map((t) => <span key={t}>{t}</span>)}
+                </div>
+                {s.usedIn && (
+                  <a className="skill-used-in" href={s.usedIn.href} target="_blank" rel="noopener noreferrer" onClick={e => e.stopPropagation()}>
+                    used in → {s.usedIn.label}
+                  </a>
+                )}
               </div>
             </Reveal>
           ))}
@@ -434,7 +539,7 @@ function Projects() {
       <div className="wrap">
         <Reveal className="section-head">
           <div>
-            <div className="section-num">03 — Work</div>
+            <div className="section-num">04 — Work</div>
             <h2 className="section-title">
               Selected things I&rsquo;ve <em>actually shipped</em>.
             </h2>
@@ -535,7 +640,7 @@ function Journey() {
       <div className="wrap">
         <Reveal className="section-head">
           <div>
-            <div className="section-num">04 — Journey</div>
+            <div className="section-num">05 — Journey</div>
             <h2 className="section-title">
               From <em>fixing spreadsheets</em> to shipping platforms.
             </h2>
@@ -580,7 +685,7 @@ function Contact() {
       <div className="contact-blob"></div>
       <div className="wrap contact-inner">
         <Reveal>
-          <div className="eyebrow">05 — Let&rsquo;s build</div>
+          <div className="eyebrow">06 — Let&rsquo;s build</div>
           <h2>
             got something <em>weird</em><br/>to build?
           </h2>
@@ -593,10 +698,10 @@ function Contact() {
             {!copied && <Icon.copy width={14} height={14} />}
           </button>
           <div className="socials">
-            <a href="https://www.facebook.com/daniel.502270/" target="_blank" rel="noopener noreferrer" data-cursor-hover>facebook</a>
+            <a href="https://www.facebook.com/daniel.502270/" target="_blank" rel="noopener noreferrer me" data-cursor-hover>facebook</a>
             <a href={`tel:+63${phone.slice(1)}`} data-cursor-hover>{phone}</a>
-            <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer" data-cursor-hover><Icon.github width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />github</a>
-            <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
+            <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.github width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />github</a>
+            <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
 ``          </div>
         </Reveal>
 
@@ -608,4 +713,4 @@ function Contact() {
   );
 }
 
-Object.assign(window, { Reveal, Nav, Hero, About, Stack, Projects, Journey, Contact });
+Object.assign(window, { Reveal, Nav, Hero, About, Stack, TechSkills, Projects, Journey, Contact });
