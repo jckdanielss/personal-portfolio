@@ -115,10 +115,7 @@ function Hero() {
         <div className="hero-layout">
           <div className="hero-copy">
             <Reveal>
-              <div className="hello-tag" data-cursor-hover>
-                <span className="dot-pulse"></span>
-                available for freelance · Q3 2026
-              </div>
+              <p className="hello-tag">available for freelance</p>
             </Reveal>
 
             <Reveal delay={100}>
