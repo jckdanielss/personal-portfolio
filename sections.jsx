@@ -26,13 +26,28 @@ function Reveal({ children, delay = 0, as: As = "div", className = "", ...rest }
 }
 
 /* ─── Nav ─── */
+const NAV_LINKS = [
+  ["about", "01"], ["stack", "02"], ["skills", "03"],
+  ["work", "04"], ["journey", "05"], ["contact", "06"],
+];
+
 function Nav({ theme, toggleTheme }) {
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
   useEffect(() => {
     const on = () => setScrolled(window.scrollY > 30);
     on();
     window.addEventListener("scroll", on, { passive: true });
     return () => window.removeEventListener("scroll", on);
+  }, []);
+  useEffect(() => {
+    const els = NAV_LINKS.map(([id]) => document.getElementById(id)).filter(Boolean);
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) setActive(e.target.id); }),
+      { rootMargin: "-35% 0px -60% 0px" }
+    );
+    els.forEach((el) => io.observe(el));
+    return () => io.disconnect();
   }, []);
   return (
     <nav className={`nav ${scrolled ? "scrolled" : ""}`}>
@@ -47,12 +62,11 @@ function Nav({ theme, toggleTheme }) {
           <span>marc daniel</span>
         </a>
         <div className="nav-links">
-          <a href="#about"><span className="num">01</span>about</a>
-          <a href="#stack"><span className="num">02</span>stack</a>
-          <a href="#skills"><span className="num">03</span>skills</a>
-          <a href="#work"><span className="num">04</span>work</a>
-          <a href="#journey"><span className="num">05</span>journey</a>
-          <a href="#contact"><span className="num">06</span>contact</a>
+          {NAV_LINKS.map(([id, n]) => (
+            <a key={id} href={`#${id}`} className={active === id ? "active" : ""}>
+              <span className="num">{n}</span>{id}
+            </a>
+          ))}
         </div>
         <button className="theme-btn" data-cursor-hover onClick={toggleTheme} aria-label="toggle theme">
           {theme === "dark" ? <Icon.sun /> : <Icon.moon />}
@@ -115,19 +129,31 @@ function Hero() {
         <div className="hero-layout">
           <div className="hero-copy">
             <Reveal>
-              <p className="hello-tag">available for freelance</p>
+              <p className="hello-tag"><span className="status-dot" aria-hidden="true"></span>available for freelance — Q3 2026</p>
             </Reveal>
 
             <Reveal delay={100}>
               <h1>
-                <span className="line">hey, i&rsquo;m <span className="grad">Marc Daniel</span>—</span>
-                <span className="line">
+                <span className="line-mask"><span className="line">hey, i&rsquo;m <span className="grad">Marc Daniel</span>—</span></span>
+                <span className="line-mask"><span className="line">
                   a <span className="role-rotator" style={{ fontSize: ".7em" }}>
                     <span className="role-word">{typed}</span>
                     <span className="caret"></span>
                   </span>
-                </span>
-                <span className="line">who actually <span className="grad-2">ships</span>.</span>
+                </span></span>
+                <span className="line-mask"><span className="line">who actually{" "}
+                  <span className="scribble-wrap">
+                    <span className="grad-2">ships</span>
+                    <svg className="scribble" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
+                      <defs>
+                        <linearGradient id="scrib-g" x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0" stopColor="#5eead4" />
+                          <stop offset="1" stopColor="#818cf8" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M2 8 C 18 2, 36 11, 52 6 S 84 3, 98 7" pathLength="1" fill="none" stroke="url(#scrib-g)" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
+                    </svg>
+                  </span>.</span></span>
               </h1>
             </Reveal>
 
@@ -148,21 +174,68 @@ function Hero() {
             </div>
 
             <Reveal delay={400} className="hero-cta">
-              <a className="btn primary" href="#work" data-cursor-hover>
+              <a className="btn primary" href="#work" data-cursor-hover data-magnet>
                 see selected work <Icon.arrow className="arrow" width={14} height={14} />
               </a>
-              <a className="btn ghost" href="#contact" data-cursor-hover>
+              <a className="btn ghost" href="#contact" data-cursor-hover data-magnet>
                 <Icon.mail width={14} height={14} /> get in touch
               </a>
             </Reveal>
           </div>
 
           <Reveal delay={220} className="hero-photo-wrap">
-            <img src="pfp.jpg" alt="Marc Daniel portrait" className="hero-photo" data-cursor-hover />
+            <figure className="polaroid" data-cursor-hover>
+              <span className="tape" aria-hidden="true"></span>
+              <img src="pfp.jpg" alt="Marc Daniel portrait" className="hero-photo" />
+              <figcaption className="polaroid-cap">
+                <span>marc_daniel.jpg</span>
+                <span>cavite · utc+8</span>
+              </figcaption>
+            </figure>
+            <div className="orbit-badge" aria-hidden="true">
+              <svg viewBox="0 0 100 100">
+                <defs>
+                  <path id="badge-circle" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0" />
+                </defs>
+                <text>
+                  <textPath href="#badge-circle" textLength="224" lengthAdjust="spacingAndGlyphs">open for freelance ✦ actually ships ✦</textPath>
+                </text>
+              </svg>
+              <span className="orbit-star">✺</span>
+            </div>
           </Reveal>
         </div>
       </div>
     </header>
+  );
+}
+
+/* ─── Marquee ticker ─── */
+function Ticker() {
+  const words = [
+    ["schema → api → ui → deploy", false],
+    ["ships on time", true],
+    ["laravel × vue", false],
+    ["pixel-careful", true],
+    ["no lorem ipsum", false],
+    ["3d side-quests", true],
+    ["cavite, ph", false],
+    ["full-stack, actually", true],
+  ];
+  const chunk = (key) => (
+    <div className="ticker-chunk" key={key}>
+      {words.map(([w, serif], i) => (
+        <React.Fragment key={i}>
+          <span className={`ticker-word${serif ? " serif" : ""}`}>{w}</span>
+          <span className="ticker-star">✺</span>
+        </React.Fragment>
+      ))}
+    </div>
+  );
+  return (
+    <div className="ticker" aria-hidden="true">
+      <div className="ticker-track">{[0, 1, 2].map(chunk)}</div>
+    </div>
   );
 }
 
@@ -191,7 +264,7 @@ function About() {
               I taught myself how to build things properly by breaking them first. School gave me the foundation  but the real growth came from thesis deadlines, actual clients, and the kind of pressure that makes you rewrite a feature at 2am because it <em>has</em> to work by morning.
             </p>
             <p>
-              If you work with me, you get someone who handles the full picture. I&rsquo;ve built an <strong>Integrated Management Platform for Motorcyle Shops that is scalable</strong>, a <strong>booking platform for a transport business</strong>, and smaller sites in between  each one shipped, live, and used by real people. I don&rsquo;t hand things off halfway. I do the schema, the API, the UI, and the deploy. The stuff clients notice without knowing why the button that feels right, the price that calculates correctly, the page that loads fast that&rsquo;s the part I care about most.
+              If you work with me, you get someone who handles the full picture. I&rsquo;ve built an <strong>Integrated Management Platform for Motorcycle Shops that is scalable</strong>, a <strong>booking platform for a transport business</strong>, and smaller sites in between  each one shipped, live, and used by real people. I don&rsquo;t hand things off halfway. I do the schema, the API, the UI, and the deploy. The stuff clients notice without knowing why the button that feels right, the price that calculates correctly, the page that loads fast that&rsquo;s the part I care about most.
             </p>
             <p>
               When I&rsquo;m not shipping: I&rsquo;m probably 300 hours deep into a game I&rsquo;ve already finished, shuffling through playlists I&rsquo;ll never stop curating, or convincing myself that learning <span className="highlight">Blender</span> totally counts as work. BSIT 4th year. Based in Cavite. Runs on coffee and a questionable sleep schedule.
@@ -413,6 +486,7 @@ function TechSkills() {
         <div className="skills-grid">
           {skills.map((s, i) => (
             <Reveal key={s.name} delay={i * 60} className="skill-card" data-cursor-hover>
+              <span className="skill-idx" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
               <div className="skill-card-head">
                 <span className="skill-short">{s.short}</span>
                 <span className="skill-name">{s.name}</span>
@@ -523,14 +597,6 @@ function Projects() {
     },
   ];
 
-  const previewRef = useRef(null);
-  const onMove = (e) => {
-    if (!previewRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    previewRef.current.style.left = (e.clientX - rect.left) + "px";
-    previewRef.current.style.top = (e.clientY - rect.top) + "px";
-  };
-
   return (
     <section id="work">
       <div className="wrap">
@@ -550,7 +616,6 @@ function Projects() {
         <Reveal>
           <div className="project-list">
             {items.map((p, i) => {
-              const localPreview = useRef(null);
               return (
                 <a
                   className="project-row"
@@ -579,7 +644,7 @@ function Projects() {
                   <span className="go">
                     <Icon.arrow width={14} height={14} />
                   </span>
-                  <div className="preview" ref={localPreview}>
+                  <div className="preview">
                     <ProjectArt kind={p.art} />
                   </div>
                 </a>
@@ -689,7 +754,7 @@ function Contact() {
           <p style={{ color: "var(--ink-soft)", fontSize: 18, maxWidth: 540, margin: "0 auto", textWrap: "pretty" }}>
             I&rsquo;m taking on a few freelance projects after thesis. Custom platforms, internal tools, and very specific 3D side-quests welcome.
           </p>
-          <button className="email-btn" onClick={copy} data-cursor-hover>
+          <button className="email-btn" onClick={copy} data-cursor-hover data-magnet>
             <Icon.mail width={16} height={16} />
             {copied ? "copied to clipboard ✓" : email}
             {!copied && <Icon.copy width={14} height={14} />}
@@ -699,8 +764,16 @@ function Contact() {
             <a href={`tel:+63${phone.slice(1)}`} data-cursor-hover>{phone}</a>
             <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.github width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />github</a>
             <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
-``          </div>
+          </div>
         </Reveal>
+
+        <div className="name-marquee" aria-hidden="true">
+          <div className="name-marquee-track">
+            {Array.from({ length: 6 }).map((_, i) => (
+              <span key={i}>marc daniel <em>✺</em> </span>
+            ))}
+          </div>
+        </div>
 
         <footer className="foot">
           <div>© 2026 Marc Daniel Dela Cruz. handcoded with caffeine.</div>
@@ -710,4 +783,4 @@ function Contact() {
   );
 }
 
-Object.assign(window, { Reveal, Nav, Hero, About, Stack, TechSkills, Projects, Journey, Contact });
+Object.assign(window, { Reveal, Nav, Hero, Ticker, About, Stack, TechSkills, Projects, Journey, Contact });
