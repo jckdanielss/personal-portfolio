@@ -117,6 +117,89 @@ function CursorAura() {
   return null;
 }
 
+/* lenis smooth scroll — no-op if the CDN script didn't load */
+function SmoothScroll() {
+  useEffect(() => {
+    if (!window.Lenis) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const lenis = new window.Lenis({ duration: 1.05, smoothWheel: true });
+    let raf = requestAnimationFrame(function loop(t) {
+      lenis.raf(t);
+      raf = requestAnimationFrame(loop);
+    });
+    const onClick = (e) => {
+      const a = e.target.closest?.('a[href^="#"]');
+      if (!a) return;
+      const href = a.getAttribute("href");
+      const target = href === "#top" ? 0 : document.querySelector(href);
+      if (target === null) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: href === "#top" ? 0 : -76, duration: 1.2 });
+    };
+    document.addEventListener("click", onClick);
+    return () => {
+      cancelAnimationFrame(raf);
+      document.removeEventListener("click", onClick);
+      lenis.destroy();
+    };
+  }, []);
+  return null;
+}
+
+/* gradient hairline at the very top showing scroll progress */
+function ScrollProgress() {
+  const ref = React.useRef(null);
+  useEffect(() => {
+    let raf = 0;
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      if (ref.current) ref.current.style.transform = `scaleX(${max > 0 ? h.scrollTop / max : 0})`;
+      raf = 0;
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+  return <div className="scroll-progress" ref={ref} aria-hidden="true" />;
+}
+
+/* magnetic pull on [data-magnet] elements (desktop, motion-ok only) */
+function MagnetEffect() {
+  useEffect(() => {
+    if (window.matchMedia("(max-width: 720px)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let current = null;
+    const release = () => {
+      if (current) { current.style.transform = ""; current = null; }
+    };
+    const onMove = (e) => {
+      const m = e.target.closest?.("[data-magnet]");
+      if (current && current !== m) release();
+      if (!m) return;
+      current = m;
+      const r = m.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      m.style.transform = `translate(${dx * 0.22}px, ${dy * 0.22}px)`;
+    };
+    document.addEventListener("mousemove", onMove, { passive: true });
+    document.addEventListener("mouseleave", release);
+    return () => {
+      document.removeEventListener("mousemove", onMove);
+      document.removeEventListener("mouseleave", release);
+      release();
+    };
+  }, []);
+  return null;
+}
+
 const ACCENT_MAP = {
   "#ff8a65": { g1: "linear-gradient(135deg, #ff8a65 0%, #f472b6 45%, #a78bfa 100%)", coral: "#f56565" },
   "#5eead4": { g1: "linear-gradient(135deg, #5eead4 0%, #6ee7b7 45%, #818cf8 100%)", coral: "#10b981" },
@@ -146,8 +229,12 @@ function App() {
     <>
       <CursorAura />
       <CustomCursor />
+      <SmoothScroll />
+      <MagnetEffect />
+      <ScrollProgress />
       <Nav theme={theme} toggleTheme={toggleTheme} />
       <Hero />
+      <Ticker />
       <About />
       <Stack />
       <TechSkills />
