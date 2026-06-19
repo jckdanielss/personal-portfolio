@@ -68,9 +68,23 @@ function Nav({ theme, toggleTheme }) {
             </a>
           ))}
         </div>
-        <button className="theme-btn" data-cursor-hover onClick={toggleTheme} aria-label="toggle theme">
-          {theme === "dark" ? <Icon.sun /> : <Icon.moon />}
-        </button>
+        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <button
+            className="theme-btn terminal-btn"
+            data-cursor-hover
+            onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "`", bubbles: true }))}
+            aria-label="open terminal"
+            title="open terminal (or press `)"
+          >
+            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden="true">
+              <path d="M2 4l4 3.5L2 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 11h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+            </svg>
+          </button>
+          <button className="theme-btn" data-cursor-hover onClick={toggleTheme} aria-label="toggle theme">
+            {theme === "dark" ? <Icon.sun /> : <Icon.moon />}
+          </button>
+        </div>
       </div>
     </nav>
   );
@@ -129,7 +143,7 @@ function Hero() {
         <div className="hero-layout">
           <div className="hero-copy">
             <Reveal>
-              <p className="hello-tag"><span className="status-dot" aria-hidden="true"></span>available for freelance — Q3 2026</p>
+              <p className="hello-tag"><span className="status-dot" aria-hidden="true"></span>available for freelance 2026</p>
             </Reveal>
 
             <Reveal delay={100}>
@@ -285,6 +299,7 @@ function About() {
             </div>
             <div className="row"><span className="k">vices</span><span className="v">"gaming, music, blender fails"</span></div>
             <div className="comment">// last updated · May 2026</div>
+            <div className="comment" style={{ marginTop: "6px", opacity: ".7" }}>// press ` to go deeper</div>
           </Reveal>
         </div>
       </div>
