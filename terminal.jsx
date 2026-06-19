@@ -5,9 +5,11 @@ const { useEffect, useRef, useState, useCallback } = React;
 // ── static data ────────────────────────────────────────────────────────────
 
 const PROJECTS = [
-  { n: 1, slug: "cavite-moto-tech", label: "Cavite Moto-Tech Hub",    stack: "Vue 3 · Laravel · MySQL · Three.js · Capacitor", year: "2025—now", url: "https://cavitemototech.ogm1.com" },
-  { n: 2, slug: "dc-transport",     label: "D.C. Transport Services", stack: "Vue 3 · Laravel · MySQL · Leaflet",                year: "2026",     url: "https://dctransport.ogm1.com" },
-  { n: 3, slug: "den-portfolio",    label: "Den · VA Portfolio",       stack: "HTML · CSS · JS · Vercel · Figma",                year: "2026",     url: "https://den-portfolio-plum.vercel.app" },
+  { n: 1, slug: "cavite-moto-tech", label: "Cavite Moto-Tech Hub",            stack: "Vue 3 · Laravel · MySQL · Three.js · Capacitor", year: "2025—now", url: "https://cavitemototech.ogm1.com" },
+  { n: 2, slug: "dc-transport",     label: "D.C. Transport Services",         stack: "Vue 3 · Laravel · MySQL · Leaflet",               year: "2026",     url: "https://dctransport.ogm1.com" },
+  { n: 3, slug: "den-portfolio",    label: "Den · VA Portfolio",              stack: "HTML · CSS · JS · Vercel · Figma",               year: "2026",     url: "https://den-portfolio-plum.vercel.app" },
+  { n: 4, slug: "rmo-global",       label: "R Mo Global Diversity Solutions", stack: "React · HTML · CSS · Vercel",                    year: "2026",     url: "https://rmo-seven.vercel.app" },
+  { n: 5, slug: "klori",            label: "Klori · Calorie Tracker",         stack: "Flutter · Dart · Riverpod · Laravel · MySQL",    year: "2026",     url: null },
 ];
 
 const SECTIONS = ["about", "stack", "skills", "work", "journey", "contact"];
@@ -65,7 +67,7 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
         { t: "plain", s: "│  cat <file>        read a file           │" },
         { t: "plain", s: "│  skills            tech capabilities     │" },
         { t: "plain", s: "│  cd <section>      scroll to section     │" },
-        { t: "plain", s: "│  open <1|2|3>      launch project        │" },
+        { t: "plain", s: "│  open <1-5>        launch project        │" },
         { t: "plain", s: "│  git log           commit history        │" },
         { t: "plain", s: "│  neofetch          system info           │" },
         { t: "plain", s: "│  theme             toggle dark / light   │" },
@@ -149,7 +151,9 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
             { t: "dim",    s: "─".repeat(p.label.length) },
             { t: "kv",     s: ["stack", p.stack] },
             { t: "kv",     s: ["year ", p.year] },
-            { t: "kv-url", s: ["url  ", p.url] },
+            p.url
+              ? { t: "kv-url", s: ["url  ", p.url] }
+              : { t: "dim",    s: "  url   · mobile app — no public URL yet" },
           ];
         }
         return [
@@ -196,12 +200,13 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
       const n    = parseInt(args, 10);
       const proj = PROJECTS.find(p => p.n === n);
       if (proj) {
+        if (!proj.url) return [{ t: "warn", s: `${proj.label} — no public URL yet (mobile app in dev)` }];
         setTimeout(() => window.open(proj.url, "_blank", "noopener,noreferrer"), 240);
         return [{ t: "ok", s: `opening ${proj.label}…` }];
       }
       return [
         { t: "error", s: `open: '${args || "(none)"}' not found` },
-        { t: "dim",   s: "use: open 1, open 2, or open 3" },
+        { t: "dim",   s: "use: open 1…5" },
       ];
     }
 

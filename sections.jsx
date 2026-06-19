@@ -526,7 +526,17 @@ function TechSkills() {
 }
 
 /* ─── Project preview art (placeholder for live screenshots) ─── */
-function ProjectArt({ kind }) {
+function ProjectArt({ kind, imgSrc }) {
+  if (kind === "img") {
+    return (
+      <div className="placeholder-art" style={{
+        background: "linear-gradient(135deg, #111120 0%, #1a1a30 100%)",
+        padding: "20px",
+      }}>
+        <img src={imgSrc} alt="" style={{ maxWidth: "75%", maxHeight: "75%", objectFit: "contain" }} />
+      </div>
+    );
+  }
   if (kind === "moto") {
     return (
       <div className="placeholder-art" style={{
@@ -580,6 +590,18 @@ function ProjectArt({ kind }) {
   return null;
 }
 
+/* ─── Project gallery icon ─── */
+function GalleryIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+      <rect x="1" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="8" y="1" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="1" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+      <rect x="8" y="8" width="5" height="5" rx="1" stroke="currentColor" strokeWidth="1.4"/>
+    </svg>
+  );
+}
+
 /* ─── Projects ─── */
 function Projects() {
   const items = [
@@ -610,6 +632,26 @@ function Projects() {
       href: "https://den-portfolio-plum.vercel.app",
       art: "portfolio",
     },
+    {
+      num: "04",
+      title: "R Mo Global Diversity Solutions",
+      desc: "Website for a US diversity certification consulting firm. Multi-page: services, blog, FAQ, team, networking events, contact form with captcha, and an animated client showcase (Meta · Google · CBRE · CDW).",
+      stack: "React · HTML · CSS · JavaScript · Vercel",
+      year: "2026",
+      href: "https://rmo-seven.vercel.app",
+      art: "img",
+      imgSrc: "rmo_logo.png",
+    },
+    {
+      num: "05",
+      title: "Klori · Calorie Tracker",
+      desc: "Cross-platform nutrition app — daily kcal &amp; macro tracking (protein · carbs · fat), categorized meal logging, recipe builder with live nutrition totals, AI credits system, hydration tracking, and Google / Facebook / Apple auth",
+      stack: "Flutter · Dart · Riverpod · Laravel · MySQL",
+      year: "2026",
+      art: "img",
+      imgSrc: "klori_logo.png",
+      gallery: "klori",
+    },
   ];
 
   return (
@@ -623,7 +665,7 @@ function Projects() {
             </h2>
           </div>
           <div className="right">
-            3 projects.<br/>
+            5 projects.<br/>
             live + revenue-touching.
           </div>
         </Reveal>
@@ -631,21 +673,25 @@ function Projects() {
         <Reveal>
           <div className="project-list">
             {items.map((p, i) => {
+              const isGallery = Boolean(p.gallery);
+              const openGallery = () =>
+                window.dispatchEvent(new CustomEvent("open-gallery", { detail: { slug: p.gallery } }));
               return (
                 <a
-                  className="project-row"
+                  className={`project-row${isGallery ? " project-row--gallery" : ""}`}
                   data-cursor-hover
                   key={i}
-                  href={p.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={isGallery ? undefined : p.href}
+                  target={isGallery ? undefined : "_blank"}
+                  rel={isGallery ? undefined : "noopener noreferrer"}
+                  onClick={isGallery ? (e) => { e.preventDefault(); openGallery(); } : undefined}
                   onMouseMove={(e) => {
                     const row = e.currentTarget;
                     const rect = row.getBoundingClientRect();
                     const pv = row.querySelector(".preview");
                     if (pv) {
                       pv.style.left = (e.clientX - rect.left) + "px";
-                      pv.style.top = (e.clientY - rect.top) + "px";
+                      pv.style.top  = (e.clientY - rect.top) + "px";
                     }
                   }}
                 >
@@ -656,11 +702,11 @@ function Projects() {
                     <span className="stack-used">{p.stack}</span>
                   </div>
                   <span className="year">{p.year}</span>
-                  <span className="go">
-                    <Icon.arrow width={14} height={14} />
+                  <span className={`go${isGallery ? " go--gallery" : ""}`}>
+                    {isGallery ? <GalleryIcon /> : <Icon.arrow width={14} height={14} />}
                   </span>
                   <div className="preview">
-                    <ProjectArt kind={p.art} />
+                    <ProjectArt kind={p.art} imgSrc={p.imgSrc} />
                   </div>
                 </a>
               );
@@ -677,6 +723,20 @@ function Journey() {
   const items = [
     {
       when: "2026 · NOW",
+      what: "Klori — calorie tracker",
+      where: "personal build",
+      detail: "Building a cross-platform nutrition app in Flutter. Daily kcal goals, meal logging by type, recipe builder with live totals, AI credits system, and social auth (Google · Facebook · Apple). Laravel API backend.",
+      tags: ["flutter", "dart", "riverpod", "laravel"],
+    },
+    {
+      when: "2026",
+      what: "R Mo — client website",
+      where: "client project",
+      detail: "Built the website for a US diversity certification consulting firm. Multi-page: services, blog, team, FAQ, networking events, and an animated showcase of clients like Meta, Google, CBRE, and CDW.",
+      tags: ["react", "html/css", "vercel", "freelance"],
+    },
+    {
+      when: "2026 · NOW",
       what: "Final-year thesis + freelance",
       where: "BSIT · finishing strong",
       detail: "Wrapping up senior-year capstone while taking on small client work. Open to junior / intern roles starting Q3.",
@@ -690,7 +750,7 @@ function Journey() {
       tags: ["laravel", "vue.js", "leaflet", "mysql"],
     },
     {
-      when: "2025 — now",
+      when: "2026",
       what: "CaviteMotoTech — shop ERP",
       where: "client platform",
       detail: "Solo-built ERP for a local motorcycle shop. Five role-based dashboards, supplier ↔ inventory ↔ POS flow, and a Three.js-powered CVT configurator.",

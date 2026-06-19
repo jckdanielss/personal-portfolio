@@ -242,6 +242,7 @@ function App() {
       <Journey />
       <Contact />
 
+      <Gallery />
       <Terminal theme={theme} setTheme={setTheme} />
       <TweaksPanel title="Tweaks">
         <TweakSection label="Theme">
