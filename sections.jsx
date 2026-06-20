@@ -612,7 +612,9 @@ function Projects() {
       stack: "Vue 3 · Laravel · PHP · MySQL · Tailwind · shadcn/ui · Three.js · Capacitor",
       year: "2025 — now",
       href: "https://cavitemototech.ogm1.com",
-      art: "moto",
+      art: "img",
+      imgSrc: "gallery/cavite_mototech/dashboard.png",
+      gallery: "cavitemototech",
     },
     {
       num: "02",
@@ -621,7 +623,9 @@ function Projects() {
       stack: "Vue 3 · Laravel · PHP · MySQL · Leaflet",
       year: "2026",
       href: "https://dctransport.ogm1.com",
-      art: "van",
+      art: "img",
+      imgSrc: "gallery/dc_transpo/dashboard.png",
+      gallery: "dctranspo",
     },
     {
       num: "03",
@@ -640,7 +644,8 @@ function Projects() {
       year: "2026",
       href: "https://rmo-seven.vercel.app",
       art: "img",
-      imgSrc: "rmo_logo.png",
+      imgSrc: "gallery/rmo/landing_page_hero.png",
+      gallery: "rmo",
     },
     {
       num: "05",

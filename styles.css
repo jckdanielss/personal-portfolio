@@ -153,6 +153,18 @@
   html[data-theme="light"] .cursor-ring { border-color: #18181b; }
   html[data-theme="dark"]  .cursor-ring { border-color: #f1f1f4; }
 
+  html[data-gallery-open] .cursor-ring {
+    border-color: rgba(255, 255, 255, 0.7) !important;
+    mix-blend-mode: normal;
+  }
+  html[data-gallery-open] .cursor-dot {
+    background: rgba(255, 255, 255, 0.8) !important;
+  }
+  html[data-gallery-open] body.cursor-hover .cursor-ring {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.5) !important;
+  }
+
   body.cursor-hover .cursor-ring {
     width: 56px; height: 56px;
     background: var(--ink);
@@ -1776,6 +1788,327 @@
     }
     .gallery-info-hints { display: none; }
     .gsap-cards, .gsap-cards li { width: clamp(8rem, 38vw, 11rem); }
+  }
+
+  /* ───── thumbnail carousel gallery (cavitemototech) ───── */
+  .thumb-gallery-wrap {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    justify-items: center;
+    padding: 20px 20px 20px;
+    gap: 0.75rem;
+  }
+
+  /* header row: title left · visit + close right */
+  .thumb-header {
+    width: clamp(300px, 84vw, 820px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .thumb-gallery-title {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: #fff;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .thumb-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .thumb-visit-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: rgba(158, 247, 210, 0.12);
+    border: 1px solid rgba(158, 247, 210, 0.32);
+    color: #9ef7d2;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .thumb-visit-btn:hover {
+    background: rgba(158, 247, 210, 0.22);
+    border-color: rgba(158, 247, 210, 0.55);
+  }
+
+  .thumb-close-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    color: #e7ecf2;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-family: system-ui;
+    transition: background 0.2s;
+  }
+  .thumb-close-btn:hover { background: rgba(255, 255, 255, 0.18); }
+
+  /* caption: label + description between image and thumbnails */
+  .gallery-overlay .thumb-slide-info {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 0 2px;
+    min-height: 54px;
+  }
+
+  .thumb-gallery-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9ef7d2;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .thumb-gallery-desc {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: rgba(231, 236, 242, 0.62);
+    margin: 0;
+    text-wrap: pretty;
+  }
+
+  /* carousel container — fills the 1fr grid row */
+  .gallery-overlay .image-thumbnail-carousel {
+    --tg-items: 5;
+    --tg-gap: 0.625rem;
+    --tg-accent: #9ef7d2;
+    --tg-fill: rgba(255, 255, 255, 0.48);
+    --tg-fill-active: rgba(255, 255, 255, 0.95);
+
+    width: clamp(300px, 84vw, 820px);
+    display: grid;
+    grid-template-rows: 1fr auto auto;
+    gap: 0.75rem;
+    height: 100%;
+    min-height: 0;
+  }
+
+  /* main image display — fills 1fr row, constrained to 16:9 */
+  .gallery-overlay .image-display {
+    position: relative;
+    width: auto;
+    max-width: 100%;
+    max-height: 100%;
+    aspect-ratio: 16 / 9;
+    align-self: center;
+    justify-self: center;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #14141f;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55);
+  }
+
+  .gallery-overlay .tgscreen {
+    position: absolute;
+    inset: 0;
+  }
+
+  .gallery-overlay .tgscreen img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* thumbnail strip */
+  .gallery-overlay .thumbnail-carousel {
+    display: flex;
+    align-items: center;
+    gap: var(--tg-gap);
+  }
+
+  .gallery-overlay .carousel__btn {
+    flex: 0 0 auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--tg-fill);
+    transition: color 0.2s;
+  }
+
+  .gallery-overlay .carousel__btn:hover  { color: var(--tg-fill-active); }
+  .gallery-overlay .carousel__btn:disabled { opacity: 0.12; pointer-events: none; }
+
+  .gallery-overlay .tg-arrow-icon {
+    width: 1.625rem;
+    height: 1.625rem;
+    display: block;
+  }
+
+  .gallery-overlay .carousel__slider {
+    flex: 1;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: var(--tg-gap);
+    padding: 4px 2px;
+    margin: 0;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+  }
+  .gallery-overlay .carousel__slider::-webkit-scrollbar { display: none; }
+
+  .gallery-overlay .carousel__slide {
+    cursor: pointer;
+    border-radius: 6px;
+    overflow: hidden;
+    scroll-snap-align: center;
+    flex: 1 0 calc((100% / var(--tg-items)) - 10px);
+    aspect-ratio: 16 / 9;
+    opacity: 0.55;
+    transition: opacity 0.18s, outline 0.18s;
+  }
+  .gallery-overlay .carousel__slide:hover { opacity: 0.82; }
+  .gallery-overlay .carousel__slide.active {
+    outline: 2px solid var(--tg-accent);
+    outline-offset: 2px;
+    opacity: 1;
+  }
+
+  .gallery-overlay .tg-thumbnail {
+    width: 100%;
+    height: 100%;
+  }
+  .gallery-overlay .tg-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* zoom hint + clickable image */
+  .gallery-overlay .image-display {
+    cursor: zoom-in;
+  }
+  .tg-zoom-hint {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.55);
+    pointer-events: none;
+    line-height: 1;
+    transition: opacity 0.2s;
+  }
+  .gallery-overlay .image-display:hover .tg-zoom-hint {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* fullscreen lightbox */
+  .tg-fullscreen {
+    position: fixed;
+    inset: 0;
+    z-index: 9700;
+    background: rgba(0, 0, 0, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+    animation: t-fade-in .15s ease;
+  }
+  .tg-fullscreen img {
+    max-width: 95vw;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 4px;
+    pointer-events: none;
+    box-shadow: 0 8px 48px rgba(0, 0, 0, 0.7);
+  }
+  .tg-fullscreen-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    font-family: system-ui;
+    transition: background 0.2s;
+  }
+  .tg-fullscreen-close:hover { background: rgba(255, 255, 255, 0.22); }
+
+  /* mobile — dot indicators */
+  @media (max-width: 680px) {
+    .thumb-header          { width: 92vw; }
+    .thumb-gallery-desc    { display: none; }
+    .gallery-overlay .thumb-slide-info { display: none; }
+
+    .gallery-overlay .image-thumbnail-carousel { width: 92vw; }
+
+    /* on mobile: no caption — grid handles sizing automatically */
+    .gallery-overlay .image-thumbnail-carousel {
+      grid-template-rows: 1fr auto;
+    }
+
+    .gallery-overlay .carousel__slider {
+      flex: 0 0 auto;
+      max-width: fit-content;
+      gap: 0.75rem;
+      overflow-x: visible;
+      scroll-snap-type: none;
+      padding: 4px 0;
+    }
+
+    .gallery-overlay .thumbnail-carousel { justify-content: center; }
+
+    .gallery-overlay .carousel__slide {
+      flex: none;
+      width: 0.6rem;
+      height: 0.6rem;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: var(--tg-fill);
+      overflow: visible;
+      opacity: 1;
+    }
+    .gallery-overlay .carousel__slide.active {
+      background: var(--tg-fill-active);
+      outline: none;
+    }
+    .gallery-overlay .carousel__slide:hover { opacity: 1; }
+
+    .gallery-overlay .tg-thumbnail { display: none; }
   }
 
 
