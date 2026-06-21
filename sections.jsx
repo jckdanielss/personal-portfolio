@@ -194,6 +194,9 @@ function Hero() {
               <a className="btn ghost" href="#contact" data-cursor-hover data-magnet>
                 <Icon.mail width={14} height={14} /> get in touch
               </a>
+              <a className="btn ghost" href="resume.pdf" download="Marc_Daniel_Dela_Cruz_Resume.pdf" data-cursor-hover data-magnet>
+                <Icon.download width={14} height={14} /> download cv
+              </a>
             </Reveal>
           </div>
 
