@@ -1948,15 +1948,14 @@
     min-height: 0;
   }
 
-  /* main image display — fills 1fr row, constrained to 16:9 */
+  /* main image display — fills the 1fr row; image is contained so the
+     whole screenshot is visible regardless of its aspect ratio */
   .gallery-overlay .image-display {
     position: relative;
-    width: auto;
-    max-width: 100%;
-    max-height: 100%;
-    aspect-ratio: 16 / 9;
-    align-self: center;
-    justify-self: center;
+    width: 100%;
+    height: 100%;
+    align-self: stretch;
+    justify-self: stretch;
     border-radius: 14px;
     overflow: hidden;
     background: #14141f;
@@ -1973,7 +1972,7 @@
     inset: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
     display: block;
   }
 
@@ -2106,7 +2105,7 @@
   }
   .tg-fullscreen-close:hover { background: rgba(255, 255, 255, 0.22); }
 
-  /* mobile — dot indicators */
+  /* mobile — pill / dot indicators */
   @media (max-width: 680px) {
     .thumb-header          { width: 92vw; }
     .thumb-gallery-desc    { display: none; }
@@ -2114,34 +2113,51 @@
 
     .gallery-overlay .image-thumbnail-carousel { width: 92vw; }
 
-    /* on mobile: no caption — grid handles sizing automatically */
+    /* image (auto 16:9) + indicators sit centered in the available space */
     .gallery-overlay .image-thumbnail-carousel {
-      grid-template-rows: 1fr auto;
+      grid-template-rows: auto auto;
+      align-content: center;
+      gap: 1.25rem;
     }
+    .gallery-overlay .image-display {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+    }
+
+    /* keep prev/next arrows on-screen, dots centered between them */
+    .gallery-overlay .thumbnail-carousel {
+      width: 92vw;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+    .gallery-overlay .tg-arrow-icon { width: 1.5rem; height: 1.5rem; }
 
     .gallery-overlay .carousel__slider {
-      flex: 0 0 auto;
-      max-width: fit-content;
-      gap: 0.75rem;
-      overflow-x: visible;
+      flex: 0 1 auto;
+      max-width: 100%;
+      justify-content: center;
+      gap: 0.5rem;
+      overflow-x: auto;
       scroll-snap-type: none;
-      padding: 4px 0;
+      padding: 6px 2px;
     }
-
-    .gallery-overlay .thumbnail-carousel { justify-content: center; }
 
     .gallery-overlay .carousel__slide {
       flex: none;
-      width: 0.6rem;
-      height: 0.6rem;
+      width: 8px;
+      height: 8px;
       aspect-ratio: 1;
-      border-radius: 50%;
+      border-radius: 999px;
       background: var(--tg-fill);
       overflow: visible;
       opacity: 1;
+      transition: width 0.2s, background 0.2s;
     }
+    /* active = wider accent pill */
     .gallery-overlay .carousel__slide.active {
-      background: var(--tg-fill-active);
+      width: 22px;
+      background: var(--tg-accent);
       outline: none;
     }
     .gallery-overlay .carousel__slide:hover { opacity: 1; }
