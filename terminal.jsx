@@ -67,7 +67,7 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
         { t: "plain", s: "│  cat <file>        read a file           │" },
         { t: "plain", s: "│  skills            tech capabilities     │" },
         { t: "plain", s: "│  cd <section>      scroll to section     │" },
-        { t: "plain", s: "│  open <1-5>        launch project        │" },
+        { t: "plain", s: "│  open <1-4>        launch project        │" },
         { t: "plain", s: "│  git log           commit history        │" },
         { t: "plain", s: "│  neofetch          system info           │" },
         { t: "plain", s: "│  theme             toggle dark / light   │" },
@@ -206,7 +206,7 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
       }
       return [
         { t: "error", s: `open: '${args || "(none)"}' not found` },
-        { t: "dim",   s: "use: open 1…5" },
+        { t: "dim",   s: "use: open 1…4" },
       ];
     }
 
