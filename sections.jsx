@@ -810,9 +810,9 @@ function Contact() {
             I&rsquo;m taking on a few freelance projects after thesis. Custom platforms, internal tools, and very specific 3D side-quests welcome.
           </p>
           <button className="email-btn" onClick={copy} data-cursor-hover data-magnet>
-            <Icon.mail width={16} height={16} />
-            {copied ? "copied to clipboard ✓" : email}
-            {!copied && <Icon.copy width={14} height={14} />}
+            <Icon.mail width={16} height={16} className="email-btn-icon" />
+            <span className="email-btn-text">{copied ? "copied to clipboard ✓" : email}</span>
+            {!copied && <Icon.copy width={14} height={14} className="email-btn-icon" />}
           </button>
           <div className="socials">
             <a href="https://www.facebook.com/daniel.502270/" target="_blank" rel="noopener noreferrer me" data-cursor-hover>facebook</a>
