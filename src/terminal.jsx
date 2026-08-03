@@ -1,16 +1,9 @@
 /* terminal.jsx — press ` to open the secret dev terminal */
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
+import { PROJECTS } from "./data/projects.js";
 
 // ── static data ────────────────────────────────────────────────────────────
-
-const PROJECTS = [
-  { n: 1, slug: "cavite-moto-tech", label: "Cavite Moto-Tech Hub",            stack: "Vue 3 · Laravel · MySQL · Three.js · Capacitor", year: "2025—now", url: "https://cavitemototech.ogm1.com" },
-  { n: 2, slug: "dc-transport",     label: "D.C. Transport Services",         stack: "Vue 3 · Laravel · MySQL · Leaflet",               year: "2026",     url: "https://dctransport.ogm1.com" },
-  { n: 3, slug: "den-portfolio",    label: "Den · VA Portfolio",              stack: "HTML · CSS · JS · Vercel · Figma",               year: "2026",     url: "https://den-portfolio-plum.vercel.app" },
-  { n: 4, slug: "rmo-global",       label: "R Mo Global Diversity Solutions", stack: "React · HTML · CSS · Vercel",                    year: "2026",     url: "https://rmo-seven.vercel.app" },
-  { n: 5, slug: "klori",            label: "Klori · Calorie Tracker",         stack: "Flutter · Dart · Riverpod · Laravel · MySQL",    year: "2026",     url: null },
-];
 
 const SECTIONS = ["about", "stack", "skills", "work", "journey", "contact"];
 
@@ -108,9 +101,9 @@ function exec(raw, { theme, setTheme, onClose, onMatrix, onViews }) {
         ];
       }
       if (args === "projects" || args === "projects/") {
-        return PROJECTS.map(p => ({
+        return PROJECTS.map((p, i) => ({
           t: "plain",
-          s: `  [${p.n}]  ${p.slug.padEnd(22)}  ${p.year}`,
+          s: `  [${i + 1}]  ${p.slug.padEnd(22)}  ${p.year}`,
         })).concat([
           { t: "dim", s: "" },
           { t: "dim", s: "use: open <n> to launch · cat projects/<slug> for details" },
@@ -153,12 +146,12 @@ function exec(raw, { theme, setTheme, onClose, onMatrix, onViews }) {
         const p = PROJECTS.find(x => x.slug === slug);
         if (p) {
           return [
-            { t: "accent", s: p.label },
-            { t: "dim",    s: "─".repeat(p.label.length) },
+            { t: "accent", s: p.title },
+            { t: "dim",    s: "─".repeat(p.title.length) },
             { t: "kv",     s: ["stack", p.stack] },
             { t: "kv",     s: ["year ", p.year] },
-            p.url
-              ? { t: "kv-url", s: ["url  ", p.url] }
+            p.href
+              ? { t: "kv-url", s: ["url  ", p.href] }
               : { t: "dim",    s: "  url   · mobile app — no public URL yet" },
           ];
         }
@@ -204,15 +197,15 @@ function exec(raw, { theme, setTheme, onClose, onMatrix, onViews }) {
 
     case "open": {
       const n    = parseInt(args, 10);
-      const proj = PROJECTS.find(p => p.n === n);
+      const proj = PROJECTS[n - 1];
       if (proj) {
-        if (!proj.url) return [{ t: "warn", s: `${proj.label} — no public URL yet (mobile app in dev)` }];
-        setTimeout(() => window.open(proj.url, "_blank", "noopener,noreferrer"), 240);
-        return [{ t: "ok", s: `opening ${proj.label}…` }];
+        if (!proj.href) return [{ t: "warn", s: `${proj.title} — no public URL yet (mobile app in dev)` }];
+        setTimeout(() => window.open(proj.href, "_blank", "noopener,noreferrer"), 240);
+        return [{ t: "ok", s: `opening ${proj.title}…` }];
       }
       return [
         { t: "error", s: `open: '${args || "(none)"}' not found` },
-        { t: "dim",   s: "use: open 1…4" },
+        { t: "dim",   s: `use: open 1…${PROJECTS.length}` },
       ];
     }
 
