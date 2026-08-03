@@ -3,7 +3,11 @@
    images: gallery/<slug>/<name>.png
    to add a project: add slug to GALLERY_DATA and gallery:"slug" in sections.jsx */
 
-const { useEffect, useRef, useState } = React;
+import React, { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { Draggable } from "gsap/Draggable";
+
+gsap.registerPlugin(Draggable);
 
 const GALLERY_DATA = {
   klori: {
@@ -74,7 +78,6 @@ const GALLERY_DATA = {
 };
 
 function buildSeamlessLoop(items, spacing, animateFunc) {
-  const gsap      = window.gsap;
   const overlap   = Math.ceil(1 / spacing);
   const startTime = items.length * spacing + 0.5;
   const loopTime  = (items.length + overlap) * spacing + 1;
@@ -123,7 +126,6 @@ function GsapGallery({ data, onClose }) {
 
   useEffect(() => {
     const tid = setTimeout(() => {
-      const { gsap, Draggable } = window;
       if (!gsap || !containerRef.current) return;
 
       const container = containerRef.current;
@@ -420,4 +422,4 @@ function Gallery() {
   return <GsapGallery data={data} onClose={() => setSlug(null)} />;
 }
 
-Object.assign(window, { Gallery, GALLERY_DATA });
+export { Gallery, GALLERY_DATA };

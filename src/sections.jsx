@@ -1,6 +1,7 @@
 /* sections: hero, about, stack, projects, timeline, contact */
 
-const { useEffect, useRef, useState, useMemo } = React;
+import React, { useEffect, useRef, useState, useMemo } from "react";
+import { Icon, TechIcon } from "./icons.jsx";
 
 /* ─── Reveal on scroll wrapper ─── */
 function Reveal({ children, delay = 0, as: As = "div", className = "", ...rest }) {
@@ -838,4 +839,4 @@ function Contact() {
   );
 }
 
-Object.assign(window, { Reveal, Nav, Hero, Ticker, About, Stack, TechSkills, Projects, Journey, Contact });
+export { Reveal, Nav, Hero, About, Stack, TechSkills, Projects, Journey, Contact };

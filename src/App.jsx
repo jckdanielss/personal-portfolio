@@ -1,5 +1,12 @@
 /* portfolio app — wires cursor, theme, tweaks, sections */
 
+import React, { useEffect } from "react";
+import { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakColor } from "./tweaks-panel.jsx";
+import { Nav, Hero, About, Stack, TechSkills, Projects, Journey, Contact } from "./sections.jsx";
+import { Terminal } from "./terminal.jsx";
+import { Gallery } from "./gallery.jsx";
+import "./styles.css";
+
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "theme": "light",
   "accent": "#ff8a65"
@@ -217,6 +224,11 @@ function App() {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
 
+  /* view counter — fire-and-forget hit, read back via terminal `views` command */
+  useEffect(() => {
+    fetch("https://abacus.jasoncameron.dev/hit/marc-daniel-portfolio/site-views").catch(() => {});
+  }, []);
+
   /* accent swap — rewrites --grad-1 + --peach via :root override */
   useEffect(() => {
     const a = ACCENT_MAP[t.accent] || ACCENT_MAP["#ff8a65"];
@@ -234,7 +246,6 @@ function App() {
       <ScrollProgress />
       <Nav theme={theme} toggleTheme={toggleTheme} />
       <Hero />
-      <Ticker />
       <About />
       <Stack />
       <TechSkills />
@@ -266,4 +277,4 @@ function App() {
   );
 }
 
-ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+export default App;

@@ -1,6 +1,6 @@
 /* terminal.jsx — press ` to open the secret dev terminal */
 
-const { useEffect, useRef, useState, useCallback } = React;
+import React, { useEffect, useRef, useState, useCallback } from "react";
 
 // ── static data ────────────────────────────────────────────────────────────
 
@@ -16,8 +16,13 @@ const SECTIONS = ["about", "stack", "skills", "work", "journey", "contact"];
 
 const CMD_NAMES = [
   "help", "whoami", "ls", "cat", "skills", "cd", "open",
-  "git", "neofetch", "theme", "matrix", "sudo", "clear", "exit",
+  "git", "neofetch", "theme", "matrix", "views", "sudo", "clear", "exit",
 ];
+
+// free, signup-free hit counter — incremented once per page load in portfolio.jsx
+const VIEWS_NS  = "marc-daniel-portfolio";
+const VIEWS_KEY = "site-views";
+const VIEWS_GET_URL = `https://abacus.jasoncameron.dev/get/${VIEWS_NS}/${VIEWS_KEY}`;
 
 const NF_LOGO = [
   "  ███╗   ███╗██████╗ ",
@@ -46,7 +51,7 @@ const NF_INFO = (theme) => [
 
 // ── command processor ─────────────────────────────────────────────────────
 
-function exec(raw, { theme, setTheme, onClose, onMatrix }) {
+function exec(raw, { theme, setTheme, onClose, onMatrix, onViews }) {
   const input = raw.trim();
   if (!input) return null;
 
@@ -72,6 +77,7 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
         { t: "plain", s: "│  neofetch          system info           │" },
         { t: "plain", s: "│  theme             toggle dark / light   │" },
         { t: "plain", s: "│  matrix            ???                   │" },
+        { t: "plain", s: "│  views             site view count       │" },
         { t: "plain", s: "│  clear             clear screen          │" },
         { t: "plain", s: "│  exit              close terminal        │" },
         { t: "dim",   s: "╰──────────────────────────────────────────╯" },
@@ -253,6 +259,10 @@ function exec(raw, { theme, setTheme, onClose, onMatrix }) {
     case "matrix":
       setTimeout(onMatrix, 60);
       return [{ t: "ok", s: "follow the white rabbit…" }];
+
+    case "views":
+      onViews();
+      return [{ t: "dim", s: "pinging counter…" }];
 
     case "sudo":
       return [
@@ -502,6 +512,17 @@ function Terminal({ theme, setTheme }) {
         setMatrix(true);
         setInput("");
       },
+      onViews: () => {
+        fetch(VIEWS_GET_URL)
+          .then(r => r.json())
+          .then(d => pushLines([{ type: "output", data: [
+            { t: "accent", s: `${Number(d.value ?? 0).toLocaleString()} total visits` },
+            { t: "dim",    s: "counted since this counter was added — not retroactive." },
+          ] }]))
+          .catch(() => pushLines([{ type: "output", data: [
+            { t: "error", s: "couldn't reach the counter — try again in a bit." },
+          ] }]));
+      },
     });
 
     if (result === null)               { setLines(prev => [...prev, inputEntry]); setInput(""); return; }
@@ -639,4 +660,4 @@ function Terminal({ theme, setTheme }) {
   );
 }
 
-window.Terminal = Terminal;
+export { Terminal };

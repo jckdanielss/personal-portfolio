@@ -101,5 +101,4 @@ const TechIcon = ({ name }) => {
   return <svg {...common}><rect x="4" y="4" width="24" height="24" rx="6" /></svg>;
 };
 
-window.Icon = Icon;
-window.TechIcon = TechIcon;
+export { Icon, TechIcon };
