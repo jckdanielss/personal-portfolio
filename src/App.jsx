@@ -58,71 +58,6 @@ function CustomCursor() {
   return null;
 }
 
-function CursorAura() {
-  useEffect(() => {
-    const root = document.documentElement;
-    const mobile = window.matchMedia("(max-width: 720px)");
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    const setAura = (x, y) => {
-      root.style.setProperty("--aura-x", `${(x / window.innerWidth) * 100}%`);
-      root.style.setProperty("--aura-y", `${(y / window.innerHeight) * 100}%`);
-      root.style.setProperty("--aura-x-2", `${50 + ((x / window.innerWidth) - 0.5) * 18}%`);
-      root.style.setProperty("--aura-y-2", `${58 + ((y / window.innerHeight) - 0.5) * 14}%`);
-    };
-
-    const center = () => setAura(window.innerWidth * 0.5, window.innerHeight * 0.28);
-    center();
-
-    if (mobile.matches || reduced.matches) return;
-
-    let tx = window.innerWidth * 0.5;
-    let ty = window.innerHeight * 0.28;
-    let x = tx;
-    let y = ty;
-    let raf = 0;
-
-    const onMove = (e) => {
-      tx = e.clientX;
-      ty = e.clientY;
-    };
-
-    const onLeave = () => {
-      tx = window.innerWidth * 0.5;
-      ty = window.innerHeight * 0.28;
-    };
-
-    const onResize = () => {
-      tx = Math.min(tx, window.innerWidth);
-      ty = Math.min(ty, window.innerHeight);
-      x = tx;
-      y = ty;
-      setAura(x, y);
-    };
-
-    const tick = () => {
-      x += (tx - x) * 0.09;
-      y += (ty - y) * 0.09;
-      setAura(x, y);
-      raf = requestAnimationFrame(tick);
-    };
-
-    window.addEventListener("mousemove", onMove, { passive: true });
-    window.addEventListener("mouseleave", onLeave);
-    window.addEventListener("resize", onResize);
-    raf = requestAnimationFrame(tick);
-
-    return () => {
-      window.removeEventListener("mousemove", onMove);
-      window.removeEventListener("mouseleave", onLeave);
-      window.removeEventListener("resize", onResize);
-      cancelAnimationFrame(raf);
-      center();
-    };
-  }, []);
-
-  return null;
-}
 
 /* lenis smooth scroll — no-op if the CDN script didn't load */
 function SmoothScroll() {
@@ -229,7 +164,6 @@ function App() {
 
   return (
     <>
-      <CursorAura />
       <CustomCursor />
       <SmoothScroll />
       <MagnetEffect />

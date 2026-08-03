@@ -118,27 +118,8 @@ function Hero() {
     return () => clearTimeout(t);
   }, [typed, deleting, roleIdx, roles]);
 
-  // parallax blob
-  const b1 = useRef(null), b2 = useRef(null);
-  useEffect(() => {
-    let raf = 0;
-    const onMove = (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 30;
-      const y = (e.clientY / window.innerHeight - 0.5) * 30;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        if (b1.current) b1.current.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-        if (b2.current) b2.current.style.transform = `translate3d(${-x}px, ${-y}px, 0)`;
-      });
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => { window.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
-  }, []);
-
   return (
     <header className="hero" id="top">
-      <div className="hero-blob b1" ref={b1}></div>
-      <div className="hero-blob b2" ref={b2}></div>
 
       <div className="wrap hero-content">
         <div className="hero-layout">
@@ -203,57 +184,16 @@ function Hero() {
 
           <Reveal delay={220} className="hero-photo-wrap">
             <figure className="polaroid" data-cursor-hover>
-              <span className="tape" aria-hidden="true"></span>
               <img src="pfp.jpg" alt="Marc Daniel portrait" className="hero-photo" />
               <figcaption className="polaroid-cap">
                 <span>marc_daniel.jpg</span>
                 <span>cavite · utc+8</span>
               </figcaption>
             </figure>
-            <div className="orbit-badge" aria-hidden="true">
-              <svg viewBox="0 0 100 100">
-                <defs>
-                  <path id="badge-circle" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0" />
-                </defs>
-                <text>
-                  <textPath href="#badge-circle" textLength="224" lengthAdjust="spacingAndGlyphs">open for freelance ✦ actually ships ✦</textPath>
-                </text>
-              </svg>
-              <span className="orbit-star">✺</span>
-            </div>
           </Reveal>
         </div>
       </div>
     </header>
-  );
-}
-
-/* ─── Marquee ticker ─── */
-function Ticker() {
-  const words = [
-    ["schema → api → ui → deploy", false],
-    ["ships on time", true],
-    ["laravel × vue", false],
-    ["pixel-careful", true],
-    ["no lorem ipsum", false],
-    ["3d side-quests", true],
-    ["cavite, ph", false],
-    ["full-stack, actually", true],
-  ];
-  const chunk = (key) => (
-    <div className="ticker-chunk" key={key}>
-      {words.map(([w, serif], i) => (
-        <React.Fragment key={i}>
-          <span className={`ticker-word${serif ? " serif" : ""}`}>{w}</span>
-          <span className="ticker-star">✺</span>
-        </React.Fragment>
-      ))}
-    </div>
-  );
-  return (
-    <div className="ticker" aria-hidden="true">
-      <div className="ticker-track">{[0, 1, 2].map(chunk)}</div>
-    </div>
   );
 }
 
@@ -822,14 +762,6 @@ function Contact() {
             <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
           </div>
         </Reveal>
-
-        <div className="name-marquee" aria-hidden="true">
-          <div className="name-marquee-track">
-            {Array.from({ length: 6 }).map((_, i) => (
-              <span key={i}>marc daniel <em>✺</em> </span>
-            ))}
-          </div>
-        </div>
 
         <footer className="foot">
           <div>© 2026 Marc Daniel Dela Cruz. handcoded with caffeine.</div>
