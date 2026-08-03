@@ -187,7 +187,7 @@ function About() {
           <div>
             <div className="section-num">01 — About</div>
             <h2 className="section-title">
-              I build the boring parts so the <em>fun parts</em> can ship.
+              I build the boring parts so the <span className="accent-word">fun parts</span> can ship.
             </h2>
           </div>
           <div className="right">

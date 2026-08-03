@@ -511,22 +511,16 @@
   }
   .about-text p strong { color: var(--ink); font-weight: 600; }
   .about-text > p:first-child::first-letter {
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 3.1em;
+    font-family: var(--font-mono);
+    font-size: 2.4em;
     line-height: .78;
     float: left;
     padding: .06em .14em 0 0;
-    background: var(--grad-1);
-    -webkit-background-clip: text; background-clip: text;
-    color: transparent;
+    color: var(--accent);
   }
   .about-text .highlight {
-    background: linear-gradient(120deg, transparent 0% 50%, color-mix(in oklab, var(--butter) 55%, transparent) 50% 95%, transparent 95%);
+    background: linear-gradient(120deg, transparent 0% 50%, color-mix(in oklab, var(--accent) 30%, transparent) 50% 95%, transparent 95%);
     padding: 0 2px;
-  }
-  html[data-theme="dark"] .about-text .highlight {
-    background: linear-gradient(120deg, transparent 0% 50%, color-mix(in oklab, var(--lilac) 35%, transparent) 50% 95%, transparent 95%);
   }
 
   .about-card {
@@ -540,9 +534,6 @@
     font-size: 13px;
     box-shadow: 0 24px 40px -28px var(--line-strong);
   }
-  .about-card.reveal.in { transform: rotate(.7deg); }
-  .about-card.reveal.in:hover { transform: rotate(0deg); }
-  @media (max-width: 920px) { .about-card.reveal.in, .about-card.reveal.in:hover { transform: none; } }
   .about-card .card-head {
     display: flex; align-items: center; gap: 6px;
     padding-bottom: 14px;
