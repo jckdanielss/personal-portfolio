@@ -188,12 +188,11 @@
   .logo-mark {
     width: 26px; height: 26px;
     border-radius: 8px;
-    background: var(--grad-1);
+    background: var(--accent);
     display: grid; place-items: center;
     color: white;
     font-weight: 700;
     font-size: 13px;
-    box-shadow: 0 4px 14px -4px color-mix(in oklab, var(--peach) 50%, transparent);
   }
   .nav-links {
     display: flex; gap: 4px;
@@ -201,15 +200,30 @@
     font-size: 13px;
   }
   .nav-links a {
-    padding: 8px 14px;
-    border-radius: 999px;
-    color: var(--ink-soft);
-    transition: color .2s, background .2s;
+    padding: 6px 2px;
+    margin: 0 14px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: .02em;
+    color: var(--ink-mute);
+    border-bottom: 2px solid transparent;
+    transition: color .15s, border-color .15s;
   }
-  .nav-links a:hover { color: var(--ink); background: var(--line); }
-  .nav-links a.active { color: var(--ink); background: var(--line); }
-  .nav-links a.active .num { color: var(--peach); }
-  .nav-links .num { color: var(--ink-mute); margin-right: 6px; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a.active { color: var(--ink); border-bottom-color: var(--accent); }
+
+  .nav-status {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .nav-views {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-mute);
+    white-space: nowrap;
+  }
+  @media (max-width: 900px) { .nav-views { display: none; } }
   .theme-btn {
     width: 36px; height: 36px;
     border-radius: 999px;

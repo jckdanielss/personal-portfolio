@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState, useMemo } from "react";
 import { Icon, TechIcon } from "./icons.jsx";
 import { PROJECTS } from "./data/projects.js";
+import { useViewCount } from "./lib/useViewCount.js";
 
 /* ─── Reveal on scroll wrapper ─── */
 function Reveal({ children, delay = 0, as: As = "div", className = "", ...rest }) {
@@ -29,11 +30,12 @@ function Reveal({ children, delay = 0, as: As = "div", className = "", ...rest }
 
 /* ─── Nav ─── */
 const NAV_LINKS = [
-  ["about", "01"], ["stack", "02"], ["skills", "03"],
-  ["work", "04"], ["journey", "05"], ["contact", "06"],
+  ["about", "profile"], ["stack", "modules"], ["skills", "capabilities"],
+  ["work", "deployments"], ["journey", "changelog"], ["contact", "contact"],
 ];
 
 function Nav({ theme, toggleTheme }) {
+  const views = useViewCount();
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   useEffect(() => {
@@ -61,16 +63,16 @@ function Nav({ theme, toggleTheme }) {
               <path d="M9.5 2L13 7l-3.5 5" stroke="white" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </span>
-          <span>marc daniel</span>
+          <span>marc-daniel.sys</span>
         </a>
         <div className="nav-links">
-          {NAV_LINKS.map(([id, n]) => (
-            <a key={id} href={`#${id}`} className={active === id ? "active" : ""}>
-              <span className="num">{n}</span>{id}
-            </a>
+          {NAV_LINKS.map(([id, label]) => (
+            <a key={id} href={`#${id}`} className={active === id ? "active" : ""}>{label}</a>
           ))}
         </div>
-        <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+        <div className="nav-status">
+          <span className="status-dot" aria-hidden="true"></span>
+          <span className="nav-views">{views == null ? "···" : views.toLocaleString()} views</span>
           <button
             className="theme-btn terminal-btn"
             data-cursor-hover
