@@ -925,7 +925,7 @@
     content: "";
     position: absolute; left: 8px; top: 8px; bottom: 8px;
     width: 2px;
-    background: linear-gradient(to bottom, var(--peach), var(--lilac), var(--mint));
+    background: var(--line-strong);
     border-radius: 2px;
   }
   .tl-item {
@@ -940,27 +940,29 @@
     left: -32px; top: 10px;
     width: 18px; height: 18px;
     border-radius: 50%;
-    border: 2px solid transparent;
-    background:
-      linear-gradient(var(--bg), var(--bg)) padding-box,
-      var(--grad-1) border-box;
-    transition: background .25s, transform .25s;
+    border: 2px solid var(--line-strong);
+    background: var(--bg);
+    transition: border-color .25s, transform .25s;
   }
   .tl-item:hover::before {
-    background:
-      var(--grad-1) padding-box,
-      var(--grad-1) border-box;
+    border-color: var(--accent);
     transform: scale(1.15);
   }
+  .tl-item:first-child::before { border-color: var(--ok); }
   .tl-item:first-child::after {
     content: "";
     position: absolute;
     left: -32px; top: 10px;
     width: 18px; height: 18px;
     border-radius: 50%;
-    border: 2px solid var(--peach);
+    border: 2px solid var(--ok);
     animation: ping 2.4s cubic-bezier(0, 0, .2, 1) infinite;
     pointer-events: none;
+  }
+  .tl-version {
+    font-family: var(--font-mono);
+    color: var(--ink);
+    font-weight: 500;
   }
   .tl-item .when {
     font-family: var(--font-mono);

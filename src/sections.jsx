@@ -603,6 +603,7 @@ function Journey() {
   const items = [
     {
       when: "2026 · NOW",
+      version: "v3.0.0",
       what: "Final year + open for work",
       where: "BSIT · finishing strong",
       detail: "Wrapping up my capstone while shipping client and personal projects on the side. Open to junior / intern roles from Q3 2026.",
@@ -610,6 +611,7 @@ function Journey() {
     },
     {
       when: "2025",
+      version: "v2.0.0",
       what: "Started freelancing + personal builds",
       where: "self-taught → real projects",
       detail: "Stopped just learning and started shipping. First paying client, first deployed app, first time someone outside my family actually used something I built.",
@@ -617,6 +619,7 @@ function Journey() {
     },
     {
       when: "2023",
+      version: "v1.0.0",
       what: "Started BSIT",
       where: "National College of Science and Technology",
       detail: "Picked up the basics, then went off-syllabus fast. School gave me the foundation — everything else came from building things that had to actually work.",
@@ -631,7 +634,7 @@ function Journey() {
           <div>
             <div className="section-num">05 — Journey</div>
             <h2 className="section-title">
-              From <em>fixing spreadsheets</em> to shipping platforms.
+              From <span className="accent-word">fixing spreadsheets</span> to shipping platforms.
             </h2>
           </div>
           <div className="right">
@@ -644,7 +647,7 @@ function Journey() {
           <div className="timeline">
             {items.map((t, i) => (
               <div className="tl-item" key={i} data-cursor-hover>
-                <div className="when">{t.when}</div>
+                <div className="when"><span className="tl-version">{t.version}</span> · {t.when}</div>
                 <h3 className="what">{t.what}</h3>
                 <div className="where">{t.where}</div>
                 <p className="detail" dangerouslySetInnerHTML={{ __html: t.detail }} />
