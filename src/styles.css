@@ -1011,18 +1011,6 @@
     position: relative;
     overflow: hidden;
   }
-  .contact-blob {
-    position: absolute;
-    width: 700px; height: 700px;
-    border-radius: 50%;
-    filter: blur(100px);
-    background: var(--grad-3);
-    opacity: .35;
-    bottom: -300px; left: 50%;
-    transform: translateX(-50%);
-    pointer-events: none;
-  }
-  html[data-theme="dark"] .contact-blob { opacity: .22; }
   .contact-inner { position: relative; z-index: 1; text-align: center; }
   .contact .eyebrow {
     font-family: var(--font-mono);
@@ -1040,13 +1028,6 @@
     font-weight: 500;
     margin: 0 0 24px;
   }
-  .contact h2 em {
-    font-family: var(--font-serif);
-    font-style: italic;
-    background: var(--grad-1);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    font-weight: 400;
-  }
   .contact .email-btn {
     display: inline-flex; align-items: center; gap: 14px;
     padding: 18px 28px;
@@ -1063,22 +1044,19 @@
   .email-btn-icon { flex-shrink: 0; }
   .email-btn-text { min-width: 0; overflow-wrap: anywhere; }
 
-  .socials {
-    display: flex; gap: 8px;
+  .endpoints {
+    display: flex; gap: 24px;
     justify-content: center;
     margin-top: 40px;
     flex-wrap: wrap;
-  }
-  .socials a {
-    padding: 10px 18px;
-    border-radius: 999px;
-    border: 1px solid var(--line-strong);
     font-family: var(--font-mono);
-    font-size: 13px;
-    color: var(--ink-soft);
-    transition: background .2s, color .2s, transform .2s;
   }
-  .socials a:hover { background: var(--card); color: var(--ink); transform: translateY(-2px); }
+  .endpoints a {
+    font-size: 13px;
+    color: var(--ink-mute);
+    transition: color .2s;
+  }
+  .endpoints a:hover { color: var(--accent); }
 
   footer.foot {
     border-top: 1px solid var(--line);
@@ -1119,7 +1097,7 @@
       padding: 14px 18px;
       font-size: 13px;
     }
-    .socials { margin-top: 28px; }
+    .endpoints { margin-top: 28px; }
   }
 
   @media (max-width: 380px) {

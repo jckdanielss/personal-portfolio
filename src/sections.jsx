@@ -674,12 +674,11 @@ function Contact() {
 
   return (
     <section className="contact" id="contact">
-      <div className="contact-blob"></div>
       <div className="wrap contact-inner">
         <Reveal>
-          <div className="eyebrow">06 — Let&rsquo;s build</div>
+          <div className="eyebrow">new request</div>
           <h2>
-            got something <em>weird</em><br/>to build?
+            got something <span className="accent-word">weird</span><br/>to build?
           </h2>
           <p style={{ color: "var(--ink-soft)", fontSize: 18, maxWidth: 540, margin: "0 auto", textWrap: "pretty" }}>
             I&rsquo;m taking on a few freelance projects after thesis. Custom platforms, internal tools, and very specific 3D side-quests welcome.
@@ -689,11 +688,11 @@ function Contact() {
             <span className="email-btn-text">{copied ? "copied to clipboard ✓" : email}</span>
             {!copied && <Icon.copy width={14} height={14} className="email-btn-icon" />}
           </button>
-          <div className="socials">
-            <a href="https://www.facebook.com/daniel.502270/" target="_blank" rel="noopener noreferrer me" data-cursor-hover>facebook</a>
-            <a href={`tel:+63${phone.slice(1)}`} data-cursor-hover>{phone}</a>
-            <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.github width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />github</a>
-            <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer me" data-cursor-hover><Icon.linkedin width={14} height={14} style={{ verticalAlign: "-2px", marginRight: 6 }} />linkedin</a>
+          <div className="endpoints">
+            <a href="https://www.facebook.com/daniel.502270/" target="_blank" rel="noopener noreferrer me" data-cursor-hover>→ facebook</a>
+            <a href={`tel:+63${phone.slice(1)}`} data-cursor-hover>→ {phone}</a>
+            <a href="https://github.com/jckdanielss" target="_blank" rel="noopener noreferrer me" data-cursor-hover>→ github</a>
+            <a href="https://www.linkedin.com/in/marc-daniel-dela-cruz-8a16b43b9/" target="_blank" rel="noopener noreferrer me" data-cursor-hover>→ linkedin</a>
           </div>
         </Reveal>
 
