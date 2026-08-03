@@ -223,7 +223,7 @@
     color: var(--ink-mute);
     white-space: nowrap;
   }
-  @media (max-width: 900px) { .nav-views { display: none; } }
+  @media (max-width: 900px) { .nav-status { display: none; } }
   .theme-btn {
     width: 36px; height: 36px;
     border-radius: 999px;
@@ -369,8 +369,6 @@
     font-size: 11px;
     color: var(--ink-mute);
   }
-  @media (max-width: 480px) { .status-grid { grid-template-columns: 1fr 1fr; } }
-
   .hero-content { position: relative; z-index: 1; }
 
   .status-dot {

@@ -1,6 +1,6 @@
 /* sections: hero, about, stack, projects, timeline, contact */
 
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Icon, TechIcon } from "./icons.jsx";
 import { PROJECTS, shippedCount, liveCount } from "./data/projects.js";
