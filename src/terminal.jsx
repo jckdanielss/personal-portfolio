@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState, useCallback } from "react";
 import { PROJECTS } from "./data/projects.js";
+import { VIEWS_GET_URL } from "./lib/viewCounter.js";
 
 // ── static data ────────────────────────────────────────────────────────────
 
@@ -11,11 +12,6 @@ const CMD_NAMES = [
   "help", "whoami", "ls", "cat", "skills", "cd", "open",
   "git", "neofetch", "theme", "matrix", "views", "sudo", "clear", "exit",
 ];
-
-// free, signup-free hit counter — incremented once per page load in portfolio.jsx
-const VIEWS_NS  = "marc-daniel-portfolio";
-const VIEWS_KEY = "site-views";
-const VIEWS_GET_URL = `https://abacus.jasoncameron.dev/get/${VIEWS_NS}/${VIEWS_KEY}`;
 
 const NF_LOGO = [
   "  ███╗   ███╗██████╗ ",

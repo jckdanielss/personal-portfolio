@@ -5,6 +5,7 @@ import { useTweaks, TweaksPanel, TweakSection, TweakRadio, TweakColor } from "./
 import { Nav, Hero, About, Stack, TechSkills, Projects, Journey, Contact } from "./sections.jsx";
 import { Terminal } from "./terminal.jsx";
 import { Gallery } from "./gallery.jsx";
+import { VIEWS_HIT_URL } from "./lib/viewCounter.js";
 import "./styles.css";
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
@@ -152,9 +153,9 @@ function App() {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
 
-  /* view counter — fire-and-forget hit, read back via terminal `views` command */
+  /* view counter — fire-and-forget hit, read back via terminal `views` command and the Nav/Hero live tiles */
   useEffect(() => {
-    fetch("https://abacus.jasoncameron.dev/hit/marc-daniel-portfolio/site-views").catch(() => {});
+    fetch(VIEWS_HIT_URL).catch(() => {});
   }, []);
 
   /* accent swap — single CSS var, no gradient derivation needed */
