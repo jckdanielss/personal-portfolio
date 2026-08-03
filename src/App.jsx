@@ -8,8 +8,8 @@ import { Gallery } from "./gallery.jsx";
 import "./styles.css";
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "theme": "light",
-  "accent": "#ff8a65"
+  "theme": "dark",
+  "accent": "#7c6fef"
 }/*EDITMODE-END*/;
 
 function CustomCursor() {
@@ -207,13 +207,6 @@ function MagnetEffect() {
   return null;
 }
 
-const ACCENT_MAP = {
-  "#ff8a65": { g1: "linear-gradient(135deg, #ff8a65 0%, #f472b6 45%, #a78bfa 100%)", coral: "#f56565" },
-  "#5eead4": { g1: "linear-gradient(135deg, #5eead4 0%, #6ee7b7 45%, #818cf8 100%)", coral: "#10b981" },
-  "#a78bfa": { g1: "linear-gradient(135deg, #a78bfa 0%, #c084fc 45%, #f472b6 100%)", coral: "#8b5cf6" },
-  "#fcd34d": { g1: "linear-gradient(135deg, #fcd34d 0%, #fb923c 45%, #f43f5e 100%)", coral: "#f59e0b" },
-};
-
 function App() {
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
   const theme = t.theme;
@@ -229,12 +222,9 @@ function App() {
     fetch("https://abacus.jasoncameron.dev/hit/marc-daniel-portfolio/site-views").catch(() => {});
   }, []);
 
-  /* accent swap — rewrites --grad-1 + --peach via :root override */
+  /* accent swap — single CSS var, no gradient derivation needed */
   useEffect(() => {
-    const a = ACCENT_MAP[t.accent] || ACCENT_MAP["#ff8a65"];
-    document.documentElement.style.setProperty("--grad-1", a.g1);
-    document.documentElement.style.setProperty("--peach", t.accent);
-    document.documentElement.style.setProperty("--coral", a.coral);
+    document.documentElement.style.setProperty("--accent", t.accent);
   }, [t.accent]);
 
   return (
@@ -269,7 +259,7 @@ function App() {
             label="Color"
             value={t.accent}
             onChange={(v) => setTweak("accent", v)}
-            options={["#ff8a65", "#5eead4", "#a78bfa", "#fcd34d"]}
+            options={["#7c6fef", "#4dd8e0", "#f5b942", "#f2545b"]}
           />
         </TweakSection>
       </TweaksPanel>

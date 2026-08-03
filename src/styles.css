@@ -1,28 +1,21 @@
 
   :root {
-    /* light theme */
-    --bg: #f6f3ec;
-    --bg-2: #efeae0;
-    --ink: #18181b;
-    --ink-soft: #4a4a52;
-    --ink-mute: #7d7d86;
-    --line: #1a1a1f14;
-    --line-strong: #1a1a1f22;
-    --card: #fffdf7;
-    --card-hover: #fffaee;
+    /* dark is the default theme */
+    --bg: #0b0d10;
+    --bg-2: #101319;
+    --ink: #e8eaed;
+    --ink-soft: #9aa1ab;
+    --ink-mute: #5b6470;
+    --line: rgba(255,255,255,.08);
+    --line-strong: rgba(255,255,255,.16);
+    --card: #12151a;
+    --card-hover: #171b22;
 
-    /* accents — playful, easy on eyes */
-    --peach: #ff8a65;
-    --coral: #f56565;
-    --lilac: #a78bfa;
-    --indigo: #6366f1;
-    --mint: #5eead4;
-    --emerald: #10b981;
-    --butter: #fcd34d;
+    --accent: #7c6fef;
+    --ok: #34d399;
+    --warn: #f5b942;
+    --danger: #f2545b;
 
-    --grad-1: linear-gradient(135deg, #ff8a65 0%, #f472b6 45%, #a78bfa 100%);
-    --grad-2: linear-gradient(135deg, #5eead4 0%, #818cf8 60%, #a78bfa 100%);
-    --grad-3: linear-gradient(120deg, #fcd34d 0%, #ff8a65 60%, #f472b6 100%);
     --aura-x: 50%;
     --aura-y: 28%;
     --aura-x-2: 54%;
@@ -34,27 +27,23 @@
     --font-display: "Bricolage Grotesque", ui-sans-serif, system-ui, sans-serif;
     --font-body: "DM Sans", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "JetBrains Mono", ui-monospace, "SF Mono", monospace;
-    --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
   }
 
-  html[data-theme="dark"] {
-    --bg: #0e0e14;
-    --bg-2: #14141c;
-    --ink: #f1f1f4;
-    --ink-soft: #b8b8c2;
-    --ink-mute: #76767f;
-    --line: #ffffff14;
-    --line-strong: #ffffff24;
-    --card: #15151d;
-    --card-hover: #1a1a24;
+  html[data-theme="light"] {
+    --bg: #f7f7f9;
+    --bg-2: #f0f1f4;
+    --ink: #14161a;
+    --ink-soft: #54596a;
+    --ink-mute: #8b90a0;
+    --line: rgba(20,22,26,.08);
+    --line-strong: rgba(20,22,26,.16);
+    --card: #ffffff;
+    --card-hover: #f7f7fb;
 
-    --peach: #ff9b7a;
-    --coral: #ff7a7a;
-    --lilac: #b794ff;
-    --indigo: #818cf8;
-    --mint: #6dd5c5;
-    --emerald: #34d399;
-    --butter: #fde68a;
+    --accent: #6a5cf0;
+    --ok: #16a673;
+    --warn: #c98a1a;
+    --danger: #d43b42;
   }
 
   * { box-sizing: border-box; }
@@ -84,7 +73,7 @@
     z-index: 1;
   }
 
-  ::selection { background: var(--lilac); color: #fff; }
+  ::selection { background: var(--accent); color: #fff; }
 
   a { color: inherit; text-decoration: none; }
   button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: none; }
@@ -105,10 +94,16 @@
     height: 28px;
     border-radius: 50%;
     border: 2.5px solid var(--line-strong);
-    border-top-color: var(--peach);
+    border-top-color: var(--accent);
     animation: spin .7s linear infinite;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
+
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
 
   /* ───── custom cursor ───── */
   .cursor-aura {
@@ -302,14 +297,14 @@
     position: relative;
     width: 7px; height: 7px;
     border-radius: 50%;
-    background: var(--emerald);
+    background: var(--ok);
     flex-shrink: 0;
   }
   .status-dot::after {
     content: "";
     position: absolute; inset: -2px;
     border-radius: 50%;
-    border: 1px solid var(--emerald);
+    border: 1px solid var(--ok);
     animation: ping 2.2s cubic-bezier(0, 0, .2, 1) infinite;
   }
   @keyframes ping {
@@ -585,12 +580,11 @@
     max-width: 720px;
     text-wrap: balance;
   }
-  .section-title em {
-    font-family: var(--font-serif);
-    font-style: italic;
-    background: var(--grad-1);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    font-weight: 400;
+  .section-title em,
+  .accent-word {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent);
   }
   .section-head .right {
     font-family: var(--font-mono);
@@ -675,8 +669,8 @@
     display: inline-block;
     padding: 1px 8px;
     border-radius: 999px;
-    background: color-mix(in oklab, var(--emerald) 18%, transparent);
-    color: var(--emerald);
+    background: color-mix(in oklab, var(--ok) 18%, transparent);
+    color: var(--ok);
     font-size: 11px;
     margin-right: 4px;
   }
@@ -1278,7 +1272,7 @@
     top: 0; left: 0;
     width: 100%;
     height: 2.5px;
-    background: var(--grad-1);
+    background: var(--accent);
     transform: scaleX(0);
     transform-origin: left;
     z-index: 101;
@@ -1522,7 +1516,7 @@
   .t-row-live  { margin-top: 4px; }
 
   .t-ps1 {
-    color: var(--peach, #ff8a65);
+    color: var(--accent, #7c6fef);
     white-space: nowrap;
     flex-shrink: 0;
     font-weight: 500;
@@ -1535,7 +1529,7 @@
     outline: none;
     color: #d4d4d8;
     font: inherit;
-    caret-color: var(--peach, #ff8a65);
+    caret-color: var(--accent, #7c6fef);
     padding: 0;
   }
 
@@ -1548,7 +1542,7 @@
   /* output type colors */
   .t-val    { color: #d4d4d8; }
   .t-dim    { color: #52525b; }
-  .t-accent { color: var(--peach, #ff8a65); font-weight: 500; }
+  .t-accent { color: var(--accent, #7c6fef); font-weight: 500; }
   .t-ok     { color: #5eead4; }
   .t-error  { color: #f87171; }
   .t-warn   { color: #fde68a; }
@@ -1558,7 +1552,7 @@
 
   .t-json-key { color: #818cf8; }
   .t-json-val { color: #d4d4d8; }
-  .t-git-hash { color: var(--butter, #fcd34d); }
+  .t-git-hash { color: var(--warn, #f5b942); }
 
   /* neofetch layout */
   .t-nf {
@@ -1571,14 +1565,14 @@
   .t-nf-logo {
     font-size: 11px;
     line-height: 1.55;
-    color: var(--peach, #ff8a65);
+    color: var(--accent, #7c6fef);
     white-space: pre;
     flex-shrink: 0;
     letter-spacing: 0;
   }
   .t-nf-info { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   .t-nf-row  { font-size: 12px; line-height: 1.6; }
-  .t-nf-key  { color: var(--peach, #ff8a65); font-weight: 500; }
+  .t-nf-key  { color: var(--accent, #7c6fef); font-weight: 500; }
   .t-nf-val  { color: #d4d4d8; }
   .t-nf-head { color: #d4d4d8; font-weight: 500; }
   .t-nf-colors {
