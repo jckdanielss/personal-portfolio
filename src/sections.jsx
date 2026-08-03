@@ -102,6 +102,8 @@ function StatTile({ label, value, suffix = "" }) {
 
   useEffect(() => {
     if (value == null) return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) { mv.set(value); return; }
     const controls = animate(mv, value, { duration: 0.8, ease: [0.16, 0.84, 0.28, 1] });
     return () => controls.stop();
   }, [value]);
