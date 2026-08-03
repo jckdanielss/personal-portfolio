@@ -414,7 +414,7 @@ function TechSkills() {
           <div>
             <div className="section-num">03 — Skills</div>
             <h2 className="section-title">
-              What I know how to <em>actually do</em>.
+              What I know how to <span className="accent-word">actually do</span>.
             </h2>
           </div>
           <div className="right">
@@ -426,7 +426,7 @@ function TechSkills() {
         <div className="skills-grid">
           {skills.map((s, i) => (
             <Reveal key={s.name} delay={i * 60} className="skill-card" data-cursor-hover>
-              <span className="skill-idx" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              <span className="skill-idx" aria-hidden="true">#{String(i + 1).padStart(2, "0")}</span>
               <div className="skill-card-head">
                 <span className="skill-short">{s.short}</span>
                 <span className="skill-name">{s.name}</span>
