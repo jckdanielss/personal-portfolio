@@ -1,4 +1,4 @@
 .claude/
-.gitignore.superpowers/
+.superpowers/
 node_modules/
 dist/
