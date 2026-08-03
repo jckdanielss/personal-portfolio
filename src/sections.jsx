@@ -529,7 +529,7 @@ function GalleryIcon() {
 
 /* ─── Projects ─── */
 function Projects() {
-  const items = PROJECTS.map((p, i) => ({ ...p, num: String(i + 1).padStart(2, "0") }));
+  const items = PROJECTS;
 
   return (
     <section id="work">
@@ -538,11 +538,11 @@ function Projects() {
           <div>
             <div className="section-num">04 — Work</div>
             <h2 className="section-title">
-              Selected things I&rsquo;ve <em>actually shipped</em>.
+              Selected things I&rsquo;ve <span className="accent-word">actually shipped</span>.
             </h2>
           </div>
           <div className="right">
-            5 projects.<br/>
+            {items.length} projects.<br/>
             live + revenue-touching.
           </div>
         </Reveal>
@@ -572,7 +572,10 @@ function Projects() {
                     }
                   }}
                 >
-                  <span className="num">{p.num}</span>
+                  <span className={`status-pill${p.href ? " status-pill--live" : ""}`}>
+                    <span className="status-dot" aria-hidden="true"></span>
+                    <span className="status-pill-text">{p.href ? "live" : "in dev"}</span>
+                  </span>
                   <span className="title">{p.title}</span>
                   <div className="meta">
                     <span className="desc" dangerouslySetInnerHTML={{ __html: p.desc }} />
