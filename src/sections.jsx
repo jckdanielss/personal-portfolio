@@ -72,8 +72,10 @@ function Nav({ theme, toggleTheme }) {
           ))}
         </div>
         <div className="nav-status">
-          <span className="status-dot" aria-hidden="true"></span>
-          <span className="nav-views">{views == null ? "···" : views.toLocaleString()} views</span>
+          <span className="nav-live">
+            <span className="status-dot" aria-hidden="true"></span>
+            <span className="nav-views">{views == null ? "···" : views.toLocaleString()} views</span>
+          </span>
           <button
             className="theme-btn terminal-btn"
             data-cursor-hover

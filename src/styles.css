@@ -217,13 +217,18 @@
     align-items: center;
     gap: 14px;
   }
+  .nav-live {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
   .nav-views {
     font-family: var(--font-mono);
     font-size: 11px;
     color: var(--ink-mute);
     white-space: nowrap;
   }
-  @media (max-width: 900px) { .nav-status { display: none; } }
+  @media (max-width: 900px) { .nav-live { display: none; } }
   .theme-btn {
     width: 36px; height: 36px;
     border-radius: 999px;
