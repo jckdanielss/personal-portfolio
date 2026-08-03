@@ -587,11 +587,9 @@
   .stack-group-dot {
     width: 10px; height: 10px;
     border-radius: 50%;
-    background: var(--grad-1);
-    box-shadow: 0 0 0 4px color-mix(in oklab, var(--peach) 18%, transparent);
+    background: var(--accent);
+    box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 18%, transparent);
   }
-  .stack-group[data-grad="2"] .stack-group-dot { background: var(--grad-2); box-shadow: 0 0 0 4px color-mix(in oklab, var(--mint) 18%, transparent); }
-  .stack-group[data-grad="3"] .stack-group-dot { background: var(--grad-3); box-shadow: 0 0 0 4px color-mix(in oklab, var(--butter) 22%, transparent); }
   .stack-group-name {
     font-family: var(--font-display);
     font-size: 26px;
@@ -654,19 +652,21 @@
     transition: transform .25s, border-color .25s, background .25s;
     overflow: hidden;
   }
-  .stack-chip::before {
-    content: "";
-    position: absolute; inset: -1px;
-    background: var(--grad-1);
+  .stack-chip:hover { transform: translateY(-4px); border-color: var(--ok); }
+  .stack-chip-active {
+    position: absolute;
+    top: 10px; right: 10px;
+    display: flex; align-items: center; gap: 5px;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--ok);
+    text-transform: uppercase;
+    letter-spacing: .04em;
     opacity: 0;
-    z-index: 0;
-    border-radius: var(--radius-sm);
-    transition: opacity .3s;
+    transition: opacity .2s;
   }
-  .stack-chip:hover { transform: translateY(-4px); border-color: transparent; }
-  .stack-chip:hover::before { opacity: 1; }
-  .stack-chip > * { position: relative; z-index: 1; transition: color .25s; }
-  .stack-chip:hover > * { color: white; }
+  .stack-chip:hover .stack-chip-active { opacity: 1; }
+  .stack-chip { position: relative; }
   .stack-chip .icon {
     width: 28px; height: 28px;
     display: grid; place-items: center;
@@ -698,9 +698,6 @@
     margin-top: 4px;
   }
 
-  /* group color variations */
-  .stack-chip[data-grad="2"]::before { background: var(--grad-2); }
-  .stack-chip[data-grad="3"]::before { background: var(--grad-3); }
 
   /* ───── technical skills ───── */
   .skills-grid {

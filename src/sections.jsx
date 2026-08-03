@@ -240,7 +240,6 @@ function Stack() {
       label: "Frontend",
       tag: "client side",
       hint: "what users actually see",
-      grad: "1",
       items: [
         { name: "Vue 3",   cat: "ui",      icon: "vue"      },
         { name: "Vite",    cat: "build",   icon: "vite"     },
@@ -259,7 +258,6 @@ function Stack() {
       label: "Backend",
       tag: "server side",
       hint: "framework, lang & db",
-      grad: "2",
       items: [
         { name: "Laravel", cat: "framework", icon: "laravel" },
         { name: "PHP",     cat: "lang",      icon: "php"     },
@@ -276,7 +274,6 @@ function Stack() {
       label: "Tools & Services",
       tag: "everything else",
       hint: "3d · mobile · maps · vcs",
-      grad: "3",
       items: [
         { name: "Three.js",  cat: "3d",     icon: "three"     },
         { name: "Capacitor", cat: "mobile", icon: "capacitor" },
@@ -297,7 +294,7 @@ function Stack() {
           <div>
             <div className="section-num">02 — Stack</div>
             <h2 className="section-title">
-              Tools I reach for <em>without thinking</em>.
+              Tools I reach for <span className="accent-word">without thinking</span>.
             </h2>
           </div>
           <div className="right">
@@ -308,7 +305,7 @@ function Stack() {
 
         <div className="stack-groups">
           {groups.map((g, gi) => (
-            <Reveal key={g.id} delay={gi * 80} className="stack-group" data-grad={g.grad}>
+            <Reveal key={g.id} delay={gi * 80} className="stack-group">
               <header className="stack-group-head">
                 <div className="stack-group-label">
                   <span className="stack-group-dot" />
@@ -323,8 +320,11 @@ function Stack() {
               </header>
               <div className="stack-grid">
                 {g.items.map((it, i) => (
-                  <div className="stack-chip" data-grad={g.grad} data-cursor-hover key={it.name}
+                  <div className="stack-chip" data-cursor-hover key={it.name}
                     style={{ transitionDelay: `${i * 20}ms` }}>
+                    <span className="stack-chip-active" aria-hidden="true">
+                      <span className="status-dot" />active
+                    </span>
                     <div className="icon"><TechIcon name={it.icon} /></div>
                     <div className="name">{it.name}</div>
                     <div className="cat">{it.cat}</div>
