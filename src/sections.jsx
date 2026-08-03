@@ -697,7 +697,9 @@ function Contact() {
         </Reveal>
 
         <footer className="foot">
-          <div>© 2026 Marc Daniel Dela Cruz. handcoded with caffeine.</div>
+          <span>marc-daniel.sys · v2.0</span>
+          <span>© 2026 Marc Daniel Dela Cruz</span>
+          <span>uptime: since 2023</span>
         </footer>
       </div>
     </section>
