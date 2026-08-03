@@ -1,8 +1,9 @@
 /* sections: hero, about, stack, projects, timeline, contact */
 
 import React, { useEffect, useRef, useState, useMemo } from "react";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import { Icon, TechIcon } from "./icons.jsx";
-import { PROJECTS } from "./data/projects.js";
+import { PROJECTS, shippedCount, liveCount } from "./data/projects.js";
 import { useViewCount } from "./lib/useViewCount.js";
 
 /* ─── Reveal on scroll wrapper ─── */
@@ -95,106 +96,83 @@ function Nav({ theme, toggleTheme }) {
 }
 
 /* ─── Hero ─── */
-function Hero() {
-  const roles = useMemo(
-    () => ["full-stack dev", "spreadsheet murderer", "level grinder", "playlist curator", "BSIT student"],
-    []
-  );
-  const [roleIdx, setRoleIdx] = useState(0);
-  const [typed, setTyped] = useState("");
-  const [deleting, setDeleting] = useState(false);
+function StatTile({ label, value, suffix = "" }) {
+  const mv = useMotionValue(0);
+  const rounded = useTransform(mv, (v) => Math.round(v).toLocaleString() + suffix);
 
   useEffect(() => {
-    const word = roles[roleIdx];
-    if (!deleting && typed === word) {
-      const t = setTimeout(() => setDeleting(true), 1500);
-      return () => clearTimeout(t);
-    }
-    if (deleting && typed === "") {
-      setDeleting(false);
-      setRoleIdx((i) => (i + 1) % roles.length);
-      return;
-    }
-    const t = setTimeout(() => {
-      setTyped((s) => (deleting ? s.slice(0, -1) : word.slice(0, s.length + 1)));
-    }, deleting ? 45 : 75);
-    return () => clearTimeout(t);
-  }, [typed, deleting, roleIdx, roles]);
+    if (value == null) return;
+    const controls = animate(mv, value, { duration: 0.8, ease: [0.16, 0.84, 0.28, 1] });
+    return () => controls.stop();
+  }, [value]);
+
+  return (
+    <div className="status-tile">
+      <span className="status-tile-label">{label}</span>
+      {value == null
+        ? <span className="status-tile-value">···</span>
+        : <motion.span className="status-tile-value">{rounded}</motion.span>}
+    </div>
+  );
+}
+
+function Hero() {
+  const views = useViewCount();
 
   return (
     <header className="hero" id="top">
-
       <div className="wrap hero-content">
-        <div className="hero-layout">
-          <div className="hero-copy">
-            <Reveal>
-              <p className="hello-tag"><span className="status-dot" aria-hidden="true"></span>available for freelance 2026</p>
-            </Reveal>
-
-            <Reveal delay={100}>
-              <h1>
-                <span className="line-mask"><span className="line">hey, i&rsquo;m <span className="grad">Marc Daniel</span>—</span></span>
-                <span className="line-mask"><span className="line">
-                  a <span className="role-rotator" style={{ fontSize: ".7em" }}>
-                    <span className="role-word">{typed}</span>
-                    <span className="caret"></span>
-                  </span>
-                </span></span>
-                <span className="line-mask"><span className="line">who actually{" "}
-                  <span className="scribble-wrap">
-                    <span className="grad-2">ships</span>
-                    <svg className="scribble" viewBox="0 0 100 12" preserveAspectRatio="none" aria-hidden="true">
-                      <defs>
-                        <linearGradient id="scrib-g" x1="0" y1="0" x2="1" y2="0">
-                          <stop offset="0" stopColor="#5eead4" />
-                          <stop offset="1" stopColor="#818cf8" />
-                        </linearGradient>
-                      </defs>
-                      <path d="M2 8 C 18 2, 36 11, 52 6 S 84 3, 98 7" pathLength="1" fill="none" stroke="url(#scrib-g)" strokeWidth="2" vectorEffect="non-scaling-stroke" strokeLinecap="round" />
-                    </svg>
-                  </span>.</span></span>
-              </h1>
-            </Reveal>
-
-            <div className="hero-meta">
-              <Reveal delay={200} className="lead">
-                <p style={{ margin: 0 }}>
-                  4th-year BSIT student building full-stack systems through thesis projects, client work, and a lot of late-night debugging. i like clean UX, practical features, and shipping things people can actually use.
-                </p>
-              </Reveal>
-              <Reveal delay={280} className="meta-block">
-                <div className="k">◉ based in</div>
-                <div className="v">Cavite, Philippines<br/>UTC+8</div>
-              </Reveal>
-              <Reveal delay={340} className="meta-block">
-                <div className="k">◉ currently</div>
-                <div className="v">finishing thesis<br/>+ freelance builds</div>
-              </Reveal>
-            </div>
-
-            <Reveal delay={400} className="hero-cta">
-              <a className="btn primary" href="#work" data-cursor-hover data-magnet>
-                see selected work <Icon.arrow className="arrow" width={14} height={14} />
-              </a>
-              <a className="btn ghost" href="#contact" data-cursor-hover data-magnet>
-                <Icon.mail width={14} height={14} /> get in touch
-              </a>
-              <a className="btn ghost" href="resume.pdf" download="Marc_Daniel_Dela_Cruz_Resume.pdf" data-cursor-hover data-magnet>
-                <Icon.download width={14} height={14} /> download cv
-              </a>
-            </Reveal>
+        <Reveal className="status-panel">
+          <div className="status-panel-head">
+            <span className="status-panel-title">marc-daniel.sys</span>
+            <span className="status-panel-live">
+              <span className="status-dot" aria-hidden="true"></span>operational
+            </span>
           </div>
 
-          <Reveal delay={220} className="hero-photo-wrap">
-            <figure className="polaroid" data-cursor-hover>
-              <img src="pfp.jpg" alt="Marc Daniel portrait" className="hero-photo" />
-              <figcaption className="polaroid-cap">
-                <span>marc_daniel.jpg</span>
-                <span>cavite · utc+8</span>
-              </figcaption>
-            </figure>
-          </Reveal>
-        </div>
+          <div className="status-panel-body">
+            <div className="status-panel-id">
+              <h1>marc daniel dela cruz</h1>
+              <p className="status-panel-role">full-stack developer · cavite, ph</p>
+              <p className="status-panel-lead">
+                4th-year BSIT student building full-stack systems through thesis projects, client work, and a lot of late-night debugging. i like clean UX, practical features, and shipping things people can actually use.
+              </p>
+              <div className="status-panel-meta">
+                <div className="meta-block">
+                  <span className="k">status</span>
+                  <span className="v"><span className="status-dot" aria-hidden="true"></span>open for freelance · q3 2026</span>
+                </div>
+                <div className="meta-block">
+                  <span className="k">uptime</span>
+                  <span className="v">since 2023</span>
+                </div>
+              </div>
+              <div className="hero-cta">
+                <a className="btn primary" href="#work" data-cursor-hover>
+                  see work <Icon.arrow className="arrow" width={14} height={14} />
+                </a>
+                <a className="btn ghost" href="#contact" data-cursor-hover>
+                  <Icon.mail width={14} height={14} /> get in touch
+                </a>
+                <a className="btn ghost" href="/resume.pdf" download="Marc_Daniel_Dela_Cruz_Resume.pdf" data-cursor-hover>
+                  <Icon.download width={14} height={14} /> download cv
+                </a>
+              </div>
+            </div>
+
+            <div className="status-grid">
+              <StatTile label="views" value={views} />
+              <StatTile label="shipped" value={shippedCount} />
+              <StatTile label="live now" value={liveCount} />
+              <figure className="polaroid status-tile--photo" data-cursor-hover>
+                <img src="/pfp.jpg" alt="Marc Daniel portrait" className="hero-photo" />
+                <figcaption className="polaroid-cap">
+                  <span>feed: cavite, ph</span>
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </Reveal>
       </div>
     </header>
   );
