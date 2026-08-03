@@ -2755,26 +2755,7 @@ with:
 
 - [ ] **Step 4: Re-verify the `prefers-reduced-motion` block has no dangling selectors**
 
-Open `src/styles.css` and find the `@media (prefers-reduced-motion: reduce)` block near the end of the file. Confirm it now reads exactly:
-
-```css
-  @media (prefers-reduced-motion: reduce) {
-    .status-dot::after,
-    .orbit-star { animation: none !important; }
-    .reveal, .reveal.in { transition: none; opacity: 1; transform: none; filter: none; }
-  }
-```
-
-Delete `.orbit-star` from that list too (it no longer exists after Task 3) — the final rule should be:
-
-```css
-  @media (prefers-reduced-motion: reduce) {
-    .status-dot::after { animation: none !important; }
-    .reveal, .reveal.in { transition: none; opacity: 1; transform: none; filter: none; }
-  }
-```
-
-Any other selector still listed there that was deleted in an earlier task (`.ticker-track`, `.name-marquee-track`, `.orbit-badge svg`, `.caret`, `.tl-item:first-child::after`, `.hero h1 .line`, `.scribble path`) should already be gone if Tasks 3, 8, and 13 were done correctly — this step is the final check that catches anything missed. `.tl-item:first-child::after` is intentional to re-add here since Task 13 kept that element (the pinging "current" marker) and reduced-motion should still disable its ping:
+Open `src/styles.css` and find the `@media (prefers-reduced-motion: reduce)` block near the end of the file. Replace its contents so it reads exactly this — the final, authoritative version — regardless of what it currently contains:
 
 ```css
   @media (prefers-reduced-motion: reduce) {
@@ -2783,6 +2764,8 @@ Any other selector still listed there that was deleted in an earlier task (`.tic
     .reveal, .reveal.in { transition: none; opacity: 1; transform: none; filter: none; }
   }
 ```
+
+`.status-dot::after` (the ping on the Hero/Nav/Work "live" dots) and `.tl-item:first-child::after` (the Journey "current" marker, kept by Task 13) are the only two animations left sitewide that need disabling under reduced motion. Every other selector that might still be listed here from before this task — `.ticker-track`, `.name-marquee-track`, `.orbit-badge svg`, `.orbit-star`, `.caret`, `.hero h1 .line`, `.scribble path` — belonged to elements deleted in Tasks 3 and 8 and must not appear in the replacement above.
 
 - [ ] **Step 5: Verify**
 
